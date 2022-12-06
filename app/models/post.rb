@@ -6,9 +6,6 @@ class Post < ApplicationRecord
   has_many :post_tags
 
 
-
-
-
   has_many_attached :images
 
 
