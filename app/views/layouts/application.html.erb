@@ -11,6 +11,43 @@
   </head>
 
   <body>
+    <header>
+      <% if customer_signed_in? %>
+      <div>ようこそ、<%= current_customer.account_name %>さん!!</div>
+
+      <li>
+      <%= link_to destroy_customer_session_path, method: :delete do %>
+        ログアウト
+      <% end %>
+      </li>
+
+      <% elsif admin_signed_in? %>
+
+      <li>
+        <%= link_to destroy_admin_session_path, method: :delete do %>
+         ログアウト
+        <% end %>
+      </li>
+
+      <% else %>
+      <li>
+        <%= link_to about_path, do %>
+          About
+        <%end%>
+      </li>
+      <% end %>
+
+
+
+    </header>
+    <main>
+
     <%= yield %>
+    </main>
+
+    <footer class="footer">
+      <p style= "text-align: center;">Family Outing</p>
+　　</footer>
+
   </body>
 </html>
