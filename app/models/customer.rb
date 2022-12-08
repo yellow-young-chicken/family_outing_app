@@ -34,7 +34,7 @@ class Customer < ApplicationRecord
     followings.include?(user)
   end
   
-  
+  # ゲストログインのためのメゾット
   def self.guest
     find_or_create_by!(email: 'guest@example.com') do |customer|
       customer.password = SecureRandom.urlsafe_base64
