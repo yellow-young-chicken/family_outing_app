@@ -5,7 +5,6 @@ class Public::PostsController < ApplicationController
   end
 
   def create
-
     @post = Post.new(post_params)
     @post.customer_id = current_customer.id
     @post.save

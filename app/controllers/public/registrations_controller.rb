@@ -2,7 +2,10 @@
 
 class Public::RegistrationsController < Devise::RegistrationsController
 
-  before_action :configure_permitted_parameters
+  before_action :configure_permitted_parameters, only: [:create]
+  before_action :ensure_normal_customer, only: [:destroy,:update]
+  before_action :configure_update_params, only: [:update]
+  
 
   def after_sign_up_path_for(resource)
     flash[:notice] = "登録完了しました"
@@ -79,6 +82,17 @@ class Public::RegistrationsController < Devise::RegistrationsController
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys:[:last_name, :first_name, :last_name_kana, :first_name_kana, :account_name, :email, :phone_number])
   end
+  # パスワードなどののためのメゾットです。
+  def configure_update_params
+   devise_parameter_sanitizer.permit(:account_update, keys: [:email,:password])
+  end
 
+  # ゲストユーザーを削除できないようにするためのメゾットです。
+  # カスタマーコントローラーの際は、reso~~がcurrentcus~~に変更
+  def ensure_normal_customer
+    if resource.email == 'guest@example.com'
+      redirect_to root_path, alert: 'ゲストユーザーの更新・削除はできません。'
+    end
+  end
 
 end

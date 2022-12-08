@@ -15,12 +15,17 @@ Rails.application.routes.draw do
   # URL /customers/sign_in ...
   devise_for :customers,controllers: {
     registrations: "public/registrations",
-    sessions: 'public/sessions'
+    sessions: 'public/sessions',
+    passwords: 'public/passwords'
   }
+
+  devise_scope :customer do
+    post 'customers/guest_sign_in', to: 'public/sessions#guest_sign_in'
+  end
 
   scope module: :public do
     root to: 'homes#top'
-    get 'homes/about'
+    get 'about'=>"homes#about",as: "about"
     resources :posts
   end
 
