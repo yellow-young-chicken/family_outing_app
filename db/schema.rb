@@ -99,8 +99,8 @@ ActiveRecord::Schema.define(version: 2022_12_06_142236) do
     t.integer "customer_id", null: false
     t.string "title", default: "", null: false
     t.text "post_content", default: "", null: false
-    t.string "latitude", default: "", null: false
-    t.string "longitude", default: "", null: false
+    t.string "latitude", default: ""
+    t.string "longitude", default: ""
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 2022_12_06_142236) do
   end
 
   create_table "spots", force: :cascade do |t|
-    t.string "spot_name", default: "", null: false
+    t.integer "spot_name", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

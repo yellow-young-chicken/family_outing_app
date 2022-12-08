@@ -10,6 +10,7 @@
   <%= f.label "投稿内容" %>
   <%= f.text_area :post_content %>
 
+  <%= f.select :spot_name, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), k]}, include_blank: "選択して下さい"  %>
   <%= f.submit "投稿" %>
 <% end %>
 
