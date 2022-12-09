@@ -20,6 +20,14 @@
         ログアウト
       <% end %>
       </li>
+      
+      <li>
+      <%= link_to new_post_path do %>
+        投稿
+      <% end %>
+      </li>
+      
+      
 
       <% elsif admin_signed_in? %>
 
@@ -44,11 +52,15 @@
       <li>
         <%=link_to  new_customer_registration_path do %>
           新規登録
-        <%end%>
+        <% end %>
       </li>
       <li>
-      <%= link_to 'ゲストログイン（閲覧用）', customers_guest_sign_in_path, method: :post %>
+      <%= link_to customers_guest_sign_in_path, method: :post do %>
+      ゲストログイン（閲覧用）
+      
+      <% end %>
       </li>
+      
 
       <% end %>
 
