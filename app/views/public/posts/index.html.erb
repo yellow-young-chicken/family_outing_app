@@ -1,2 +1,13 @@
-<h1>Public::Posts#index</h1>
-<p>Find me in app/views/public/posts/index.html.erb</p>
+<h1>投稿一覧</h1>
+
+<% @posts.each do |post| %>
+<div>
+  <%= image_tag post.get_images %>
+  <p>投稿ユーザー画像：<%= image_tag 'sample-author1.jpg' %></p>
+  <p>タイトル:<%= post.title %></p>
+  <p>>説明：<%= post.post_content %></p>
+  <p>ユーザーネーム：<%= post.customer.account_name %></p>
+  
+</div>
+
+<% end %>
