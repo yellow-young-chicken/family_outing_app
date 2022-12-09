@@ -2,12 +2,14 @@
 
 <% @posts.each do |post| %>
 <div>
+  <%= link_to post_path(post.id) do %>
   <%= image_tag post.get_images %>
-  <p>投稿ユーザー画像：<%= image_tag 'sample-author1.jpg' %></p>
+  <% end %>
+  <p>投稿ユーザー画像：<%= image_tag post.customer.get_profile_image(100,100) %></p>
   <p>タイトル:<%= post.title %></p>
-  <p>>説明：<%= post.post_content %></p>
+  <p>説明：<%= post.post_content %></p>
   <p>ユーザーネーム：<%= post.customer.account_name %></p>
-  
+
 </div>
 
 <% end %>

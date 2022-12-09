@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-
   # 管理者用
   # URL /admin/sign_in ...
   devise_for :admin,skip: [:registrations, :passwords] ,controllers: {
@@ -26,7 +25,10 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: 'homes#top'
     get 'about'=>"homes#about",as: "about"
-    resources :posts
+    resources :posts do
+      resources :comments, only: [:create, :destroy]
+    end
+    resources :customers
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
