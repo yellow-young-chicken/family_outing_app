@@ -1,0 +1,21 @@
+<h1>ユーザー詳細ページ</h1>
+
+<h2><%= @customer.account_name %></h2>
+<%= image_tag @customer.get_profile_image(100,100) %>
+<% if @customer == current_customer %>
+ <p><%= link_to "プロフィール編集", edit_customer_path(@customer) %></p>
+<% end %>
+
+<% @posts.each do |post| %>
+<div>
+  <%= link_to post_path(post.id) do %>
+    <%= image_tag post.get_images %>
+  <% end %>
+  <p>投稿ユーザー画像：<%= image_tag post.customer.get_profile_image(100,100) %></p>
+  <p>タイトル：<%= post.title %></p>
+  <p>説明：<%= post.post_content %></p>
+  <p>ユーザーネーム：<%= post.customer.account_name %></p>
+</div>
+<% end %>
+
+
