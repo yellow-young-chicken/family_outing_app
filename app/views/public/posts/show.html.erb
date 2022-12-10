@@ -1,12 +1,31 @@
 <h1>投稿詳細</h1>
 
-<%= image_tag @post.get_images %>
+    <% @post.get_images(200,200) .each do |image| %>
+      <%= image_tag image %>
+    <% end %>
 
   <p>タイトル:<%= @post.title %></p>
   <p>説明：<%= @post.post_content %></p>
   <p>投稿ユーザー画像：<%= image_tag @post.customer.get_profile_image(100,100) %></p>
   <p>ユーザーネーム：<%= @post.customer.account_name %></p>
-  <p>投稿日:<%= @post.created_at.strftime('%Y/%m/%d')) %></p>
-  <% if @post.user == current_customer %>
+  <p>投稿日:<%= @post.created_at.strftime('%Y/%m/%d') %></p>
+  <% if @post.customer.id == current_customer.id %>
     <%= link_to "削除", post_path(@post), method: :delete %>
   <% end %>
+
+
+ <p>コメント件数：<%= @post.comments.count %></p>
+  <% @post.comments.each do |comment| %>
+    <p><%= image_tag comment.customer.get_profile_image(100,100) %></p>
+    <%= comment.customer.account_name %>
+    <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
+    <% if comment.customer == current_customer %>
+      <%=  link_to "削除", post_comment_path(@post.id,comment.id),method: :delete %>
+    <% end %>
+  <% end %>
+
+  <%= form_with model: [@post, @comment] do |f| %>
+    <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに記入してください" %>
+    <%=f.submit "送信する" %>
+  <% end %>
+

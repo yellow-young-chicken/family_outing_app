@@ -4,13 +4,14 @@
 <%= form_with model: @post do |f| %>
 
   <%= f.label "画像" %>
-  <%= f.file_field :images, accept: "image/*" %>
+  <%= f.file_field :images, accept: "image/*",multiple: true %>
+
   <%= f.label "タイトル" %>
   <%= f.text_field :title %>
   <%= f.label "投稿内容" %>
   <%= f.text_area :post_content %>
-
-  <%= f.select :spot_name, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), k]}, include_blank: "選択して下さい"  %>
+  <!--@spot_id_pairでspot_nameをidに変換しております。-->
+  <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), @spot_id_pair[k]]}, include_blank: "選択して下さい"  %>
   <%= f.submit "投稿" %>
 <% end %>
 
