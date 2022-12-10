@@ -16,7 +16,10 @@ class Post < ApplicationRecord
       images.attach(io:File.open(file_path),filename: 'default-image.jpg', content_type: 'image/jpeg')
     end
     images.variant(resize_to_limit: [width, height]).processed
-end
+  end
 
+def favorited_by?(customer)
+  favorites.exists?(customer_id: customer.id)
+end
 
 end
