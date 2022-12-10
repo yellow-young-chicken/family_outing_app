@@ -3,12 +3,15 @@
 <% @posts.each do |post| %>
 <div>
   <%= link_to post_path(post.id) do %>
-  <%= image_tag post.get_images %>
+    <% post.get_images(100,100).each do |image| %>
+      <%= image_tag image %>
+    <% end %>
   <% end %>
   <p>投稿ユーザー画像：<%= image_tag post.customer.get_profile_image(100,100) %></p>
   <p>タイトル:<%= post.title %></p>
   <p>説明：<%= post.post_content %></p>
   <p>ユーザーネーム：<%= post.customer.account_name %></p>
+   <p><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
 
 </div>
 

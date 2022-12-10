@@ -37,7 +37,7 @@ class Customer < ApplicationRecord
 
   has_one_attached :profile_image
   # プロフィール画像がなかった場合の設定、サイズの調整のためのメゾットです。
-  def get_profile_image
+  def get_profile_image(width, height)
     unless profile_image.attached?
       file_path = Rails.root.join('app/assets/images/animal_chara_radio_penguin.jpg')
       profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
