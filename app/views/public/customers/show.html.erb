@@ -9,7 +9,9 @@
 <% @posts.each do |post| %>
 <div>
   <%= link_to post_path(post.id) do %>
-    <%= image_tag post.get_images %>
+    <% post.get_images.each do |image| %>
+      <%= image_tag image.variant(resize_to_limit: [200, 200]).processed %>
+    <% end %>
   <% end %>
   <p>投稿ユーザー画像：<%= image_tag post.customer.get_profile_image(100,100) %></p>
   <p>タイトル：<%= post.title %></p>

@@ -1,17 +1,17 @@
 class Public::PostsController < ApplicationController
   def new
     @post = Post.new
-    #@spot_id_pairでハッシュを使い、spot_nameをidに変換しております
+    #@spot_id_pairでハッシュを使い、spot_nameをidに変換しております。
     @spot_id_pair = Spot.pluck('spot_name, id').to_h
 
   end
 
   def create
-    @post = Post.new(post_params)
-    @post.customer_id = current_customer.id
+    @post = current_customer.posts.build(post_params)
     if @post.save
       redirect_to root_path
     else
+      # renderの際のnilエラー解消のため、＠spot_id_pairを入れております。
       @spot_id_pair = Spot.pluck('spot_name, id').to_h
       render :new
     end
@@ -35,6 +35,7 @@ class Public::PostsController < ApplicationController
     @post.destroy
     redirect_to posts_path
   end
+
 
   private
 

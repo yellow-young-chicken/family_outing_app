@@ -4,13 +4,14 @@
 <% if @post.errors.any? %>
   <%= @post.errors.count %>件のエラーが発生しました
   <ul>
+    <%# binding.irb %>
     <% @post.errors.full_messages.each do |message| %>
       <li><%= message %></li>
     <% end %>
   </ul>
 <% end %>
 
-<%= form_with model: @post do |f| %>
+<%= form_with model: @post, url: posts_path, local: true do |f| %>
 
   <%= f.label "画像" %>
   <%= f.file_field :images, accept: "image/*",multiple: true %>
