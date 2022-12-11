@@ -12,6 +12,7 @@ class Public::PostsController < ApplicationController
     if @post.save
       redirect_to root_path
     else
+      @spot_id_pair = Spot.pluck('spot_name, id').to_h
       render :new
     end
   end
