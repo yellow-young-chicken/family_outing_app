@@ -50,3 +50,13 @@ ja:
         kagoshima: "鹿児島"
         okinawa: "沖縄"
         overseas: "海外"
+  activerecord:
+    attributes:
+      post:
+        title: タイトル
+        post_content: 本文
+        latitude: ニックネーム
+        longitude: ニックネーム
+        spot_id: 場所
+        images: ニックネーム
+        spot: 場所

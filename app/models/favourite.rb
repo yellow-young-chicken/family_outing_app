@@ -1,6 +1,7 @@
 class Favourite < ApplicationRecord
-  
-  belongs_to :post
-  belongs_to :customer
-  
+
+  # SQLのエラーが出てしまったため、クラス指定をしております。
+  belongs_to :post, class_name: "Post"
+  belongs_to :customer, class_name: "Customer"
+
 end
