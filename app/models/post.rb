@@ -7,6 +7,10 @@ class Post < ApplicationRecord
   has_many :post_tags
 
 
+  validates :title, presence:true
+  validates :post_content, presence:true
+  validates :spot_id, presence:true
+
 
   has_many_attached :images
 # 投稿画像がなかった場合の設定、サイズの調整のためのメゾットです。
