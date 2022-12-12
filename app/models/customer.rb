@@ -3,9 +3,13 @@ class Customer < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+         
+  belongs_to :spot 
 
   validates :account_name, uniqueness: true, length: { minimum:2 , maximum:20}
   validates :introduction, length: {maximum:200}
+  
+  
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy

@@ -24,6 +24,11 @@
     <%= f.text_field :account_name, :placeholder => "アカウント名" %>
   </div>
 
+    <div class="field">
+    <%= f.label "居住地" %>
+    <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), Spot.pluck('spot_name, id').to_h[k]]}, include_blank: "選択して下さい"  %>
+    </div>
+
 
   <div class="field">
     <%= f.label :メールアドレス %><br />
@@ -46,7 +51,6 @@
     <%= f.label :"パスワード(確認用)" %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
-
 
 
   <div class="actions">

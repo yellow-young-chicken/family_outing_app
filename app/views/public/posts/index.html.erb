@@ -11,6 +11,7 @@
   <p>タイトル:<%= post.title %></p>
   <p>説明：<%= post.post_content %></p>
   <p>ユーザーネーム：<%= post.customer.account_name %></p>
+  <p>場所：<%= post.spot.spot_name %></p>
    <p><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
 
 </div>

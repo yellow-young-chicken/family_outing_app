@@ -1,13 +1,13 @@
 class Public::CustomersController < ApplicationController
-  
+
   before_action :is_matching_login_customer, only: [:edit, :update]
-  
-  
+
+
   def new
   end
 
   def index
-    @customers = Customer.all
+    @customers = Customer.page(params[:page])
   end
 
   def show
@@ -34,7 +34,7 @@ class Public::CustomersController < ApplicationController
   private
 
   def customer_params
-    params.require(:customer).permit(:account_name,:profile_image)
+    params.require(:customer).permit(:account_name,:profile_image,:spot_id, :email, :phone_number)
   end
 
   # ログインしているユーザー本人かどうか確認するためのメゾットです。
