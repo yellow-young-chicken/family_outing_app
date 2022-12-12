@@ -1,2 +1,17 @@
-<h1>Public::Customers#index</h1>
-<p>Find me in app/views/public/customers/index.html.erb</p>
+<h1>ユーザー一覧</h1>
+
+<% @customers.each do |customer| %>
+<div>
+  <%= link_to customer_path(customer.id) do %>
+  <p>ユーザー画像：<%= image_tag customer.get_profile_image(100,100) %></p>
+   <% end %>
+  <p>ユーザーネーム：<%= customer.account_name %></p>
+  <p>自己紹介：<%= customer.introduction %></p>
+  <p><%= render "public/relationships/relationships", customer: customer %></p>
+  <p>follows<%= link_to customer.followings.count, customer_followings_path(customer.id) %></p>
+  <p>followers<%= link_to customer.followers.count, customer_followers_path(customer.id) %></p>
+</div>
+<% end %>
+
+<%= paginate @customers %>
+

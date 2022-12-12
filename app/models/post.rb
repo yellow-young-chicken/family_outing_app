@@ -1,7 +1,7 @@
 class Post < ApplicationRecord
 
   belongs_to :customer
-  belongs_to :spot
+  belongs_to :spot   # , optional:true
   # SQLのエラーが出てしまったため、クラス指定をしております。
   has_many :favorites, dependent: :destroy, class_name: "Favourite"
   has_many :comments, dependent: :destroy
@@ -10,7 +10,7 @@ class Post < ApplicationRecord
 
   validates :title, presence:true
   validates :post_content, presence:true
-  validates :spot_id, presence:true
+    # validates :spot_id, presence:true
   # 写真の投稿制限のためのメゾットを呼び出しております。
   validate :image_type, :image_size, :image_length
 

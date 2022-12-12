@@ -1,10 +1,14 @@
 <h1>ユーザー詳細ページ</h1>
 
-<h2><%= @customer.account_name %></h2>
+<h2>ユーザーネーム：<%= @customer.account_name %></h2>
 <%= image_tag @customer.get_profile_image(100,100) %>
 <% if @customer == current_customer %>
  <p><%= link_to "プロフィール編集", edit_customer_path(@customer) %></p>
 <% end %>
+  <p>自己紹介：<%= @customer.introduction %></p>
+  <p><%= render "public/relationships/relationships", customer: @customer %></p>
+  <p>follows<%= link_to @customer.followings.count, customer_followings_path(@customer.id) %></p>
+  <p>followers<%= link_to @customer.followers.count, customer_followers_path(@customer.id) %></p>
 
 <% @posts.each do |post| %>
 <div>
@@ -18,6 +22,11 @@
   <p>説明：<%= post.post_content %></p>
   <p>ユーザーネーム：<%= post.customer.account_name %></p>
   <p><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
+  <p>follows<%= link_to post.customer.followings.count, customer_followings_path(post.customer.id) %></p>
+  <p>followers<%= link_to post.customer.followers.count, customer_followers_path(post.customer.id) %></p>
+
+
+
 </div>
 <% end %>
 
