@@ -6,6 +6,7 @@
  <p><%= link_to "プロフィール編集", edit_customer_path(@customer) %></p>
 <% end %>
   <p>自己紹介：<%= @customer.introduction %></p>
+  <p>居住地：<%= @customer.spot.spot_name %></p>
   <p><%= render "public/relationships/relationships", customer: @customer %></p>
   <p>follows<%= link_to @customer.followings.count, customer_followings_path(@customer.id) %></p>
   <p>followers<%= link_to @customer.followers.count, customer_followers_path(@customer.id) %></p>
@@ -24,8 +25,6 @@
   <p><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
   <p>follows<%= link_to post.customer.followings.count, customer_followings_path(post.customer.id) %></p>
   <p>followers<%= link_to post.customer.followers.count, customer_followers_path(post.customer.id) %></p>
-
-
 
 </div>
 <% end %>

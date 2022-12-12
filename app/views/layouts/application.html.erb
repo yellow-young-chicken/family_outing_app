@@ -11,7 +11,7 @@
   </head>
 
   <body>
-    
+
     <header>
       <% if customer_signed_in? %>
       <div>ようこそ、<%= current_customer.account_name %>さん!!</div>
@@ -37,6 +37,13 @@
       <li>
       <%= link_to customer_path(current_customer.id) do %>
         マイページ
+      <% end %>
+      </li>
+
+
+      <li>
+      <%= link_to customers_path do %>
+        ユーザー一覧
       <% end %>
       </li>
 

@@ -6,12 +6,16 @@
 
   <p>タイトル:<%= @post.title %></p>
   <p>説明：<%= @post.post_content %></p>
+  <%= link_to customer_path(@post.customer.id) do %>
   <p>投稿ユーザー画像：<%= image_tag @post.customer.get_profile_image(100,100) %></p>
+  <% end %>
   <p>ユーザーネーム：<%= @post.customer.account_name %></p>
   <p>投稿日:<%= @post.created_at.strftime('%Y/%m/%d') %></p>
+  <p>場所：<%= @post.spot.spot_name %></p>
   <% if @post.customer.id == current_customer.id %>
     <%= link_to "削除", post_path(@post), method: :delete %>
   <% end %>
+
 
 
   <% if @post.favorited_by?(current_customer) %>
