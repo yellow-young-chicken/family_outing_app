@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 2022_12_06_142236) do
     t.text "post_content", default: "", null: false
     t.string "latitude", default: ""
     t.string "longitude", default: ""
+    t.float "rate", default: 0.0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

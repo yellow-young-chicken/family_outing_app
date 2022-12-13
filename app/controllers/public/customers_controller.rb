@@ -18,14 +18,17 @@ class Public::CustomersController < ApplicationController
 
   def edit
     @customer = Customer.find(params[:id])
+    #@spot_id_pairでハッシュを使い、spot_nameをidに変換しております。
+    @spot_id_pair = Spot.pluck('spot_name, id').to_h
   end
 
   def update
     @customer = Customer.find(params[:id])
     if @customer.update(customer_params)
-      flash[:notice] = "更新に成功しました!"
+      flash.now[:notice] = "編集に成功しました!"
       redirect_to customer_path(@customer.id)
     else
+      @spot_id_pair = Spot.pluck('spot_name, id').to_h
       render :edit
     end
   end
@@ -34,7 +37,7 @@ class Public::CustomersController < ApplicationController
   private
 
   def customer_params
-    params.require(:customer).permit(:account_name,:profile_image,:spot_id, :email, :phone_number)
+    params.require(:customer).permit(:account_name,:profile_image,:spot_id, :email, :phone_number, :introduction)
   end
 
   # ログインしているユーザー本人かどうか確認するためのメゾットです。
