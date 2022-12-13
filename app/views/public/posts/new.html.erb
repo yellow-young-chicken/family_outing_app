@@ -20,9 +20,55 @@
   <%= f.text_field :title %>
   <%= f.label "投稿内容" %>
   <%= f.text_area :post_content %>
-  <%= f.label "場所" %>
+  <%= f.label "遊んだ場所" %>
   <!--@spot_id_pairでspot_nameをidに変換しております。-->
   <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), @spot_id_pair[k]]}, include_blank: "選択して下さい"  %>
+
+   <% if @post.id === nil %>
+    <div class="form-group" id="star">
+      <%= f.label :rate %>
+      <%= f.hidden_field :rate, id: :review_star, class:'form-control' %>
+    </div>
+
+    <div id="post_raty"></div>
+    <script>
+      $(document).on('turbolinks:load', function() {
+      let raty_elem = document.querySelector('#post_raty');
+      raty_elem.innerHTML = ""
+      let option = {
+          starOn: "<%= asset_path('star-on.png') %>",
+          starOff: "<%= asset_path('star-off.png') %>",
+          starHalf: "<%= asset_path('star-half.png') %>",
+          scoreName: 'post[rate]',
+        };
+      raty(raty_elem,option);
+     });
+
+    </script>
+
+
+  <% else %>
+    <div id="rate_<%= post.id %>"></div>
+<script>
+
+    let raty_<%= post.id %> = document.querySelector('#rate_<%= post.id %>');
+    rate_<%= post.id %>.innerHTML = ""
+    let option_<%= post.id %> = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
+        score: "<%= post.rate %>",
+        readOnly: true,
+      };
+    raty(raty_<%= post.id %> ,option_<%= post.id %>);
+
+</script>
+
+  <% end %>
+
   <%= f.submit "投稿" %>
 <% end %>
 
+
+
+<p><%= link_to"HOMEに戻る",root_path %> </p>

@@ -1,2 +1,56 @@
-<h1>Public::Posts#edit</h1>
-<p>Find me in app/views/public/posts/edit.html.erb</p>
+<h1>投稿編集フォーム</h1>
+
+
+<%= flash[:notice] %>
+
+<% if @post.errors.any? %>
+  <%= @post.errors.count %>件のエラーが発生しました
+  <ul>
+    <%# binding.irb %>
+    <% @post.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: @post, url: post_path, method: :patch, local: true do |f| %>
+
+  <%= f.label "画像" %>
+  <%= f.file_field :images, accept: "image/*",multiple: true %>
+
+  <%= f.label "タイトル" %>
+  <%= f.text_field :title %>
+  <%= f.label "投稿内容" %>
+  <%= f.text_area :post_content %>
+  <%= f.label "遊んだ場所" %>
+  <!--@spot_id_pairでspot_nameをidに変換しております。-->
+  <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), @spot_id_pair[k]]}, include_blank: "選択して下さい"  %>
+
+    <% #if @post.id === nil %>
+
+     <%= f.label :rate %>
+    <div class="form-group" id="star">
+
+    </div>
+
+
+    <script>
+
+      let raty_elem = document.querySelector('#star');
+      raty_elem.innerHTML = ""
+      let option = {
+          starOn: "<%= asset_path('star-on.png') %>",
+          starOff: "<%= asset_path('star-off.png') %>",
+          starHalf: "<%= asset_path('star-half.png') %>",
+          scoreName: 'post[rate]',
+          score: "<%= @post.rate %>",
+        };
+      raty(raty_elem,option);
+
+    </script>
+
+
+  <%= f.submit "投稿" %>
+<% end %>
+
+<p><%= link_to"戻る",post_path(@post.id) %> </p>

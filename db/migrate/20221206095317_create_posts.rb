@@ -9,6 +9,7 @@ class CreatePosts < ActiveRecord::Migration[6.1]
       t.text :post_content, null: false, default: ""
       t.string :latitude, default: ""
       t.string :longitude, default: ""
+      t.float :rate, null: false, default: 0
 
       t.timestamps
     end

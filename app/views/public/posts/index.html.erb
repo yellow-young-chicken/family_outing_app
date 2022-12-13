@@ -1,20 +1,58 @@
 <h1>投稿一覧</h1>
 
+<%= flash[:notice] %>
+
 <% @posts.each do |post| %>
 <div>
+  <%= link_to customer_path(post.customer.id) do %>
+  <p>投稿ユーザー画像：<%= image_tag post.customer.get_profile_image(100,100) %></p>
+  <% end %>
+  <p>ユーザーネーム：<%= post.customer.account_name %></p>
+  <p>ユーザー居住地：<%= post.customer.spot.spot_name_i18n %></p>
+
+  投稿画像:
   <%= link_to post_path(post.id) do %>
     <% post.get_images.each do |image| %>
       <%= image_tag image.variant(resize_to_limit: [200, 200]).processed %>
     <% end %>
   <% end %>
-  <p>投稿ユーザー画像：<%= image_tag post.customer.get_profile_image(100,100) %></p>
+
   <p>タイトル:<%= post.title %></p>
-  <p>説明：<%= post.post_content %></p>
-  <p>ユーザーネーム：<%= post.customer.account_name %></p>
-  <p>場所：<%= post.spot.spot_name %></p>
+  <!--<p>説明：<%#post.post_content %></p>-->
+  <p>遊んだ場所：<%= post.spot.spot_name_i18n %></p>
+  <div id="rate_<%= post.id %>"></div>
+<script>
+$(function(){
+
+    let raty_<%= post.id %> = document.querySelector('#rate_<%= post.id %>');
+    rate_<%= post.id %>.innerHTML = ""
+    let option_<%= post.id %> = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
+        score: "<%= post.rate %>",
+        readOnly: true,
+      };
+    raty(raty_<%= post.id %> ,option_<%= post.id %>);
+});
+</script>
+
+  <% if post.favorited_by?(current_customer) %>
+
+    <%= link_to post_favorites_path(post), method: :delete do %>
+      ♥<%= post.favorites.count %> いいね
+    <% end %>
+    <% else %>
+    <%= link_to post_favorites_path(post), method: :post do %>
+      ♡<%= post.favorites.count %> いいね
+    <% end %>
+  <% end %>
    <p><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
 
 </div>
 
 <% end %>
+
+<p><%= link_to"HOMEに戻る",root_path %> </p>
+
 <%= paginate @posts %>

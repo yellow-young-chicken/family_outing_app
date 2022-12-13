@@ -10,9 +10,17 @@ class Post < ApplicationRecord
 
   validates :title, presence:true
   validates :post_content, presence:true
-    # validates :spot_id, presence:true
+  # validates :spot_id, presence:true
+  # レートの評価を1以上~5以下に設定しています。
+  validates :rate, numericality: {
+    less_than_or_equal_to: 5,
+    greater_than_or_equal_to: 1
+  }, presence: true
+    
   # 写真の投稿制限のためのメゾットを呼び出しております。
   validate :image_type, :image_size, :image_length
+  
+  
 
 
   has_many_attached :images
