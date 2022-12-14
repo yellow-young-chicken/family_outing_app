@@ -24,10 +24,8 @@ ActiveStorage.start()
 
 global.$ = jQuery;
 window.$ = jQuery;
-console.log("aaa");
 
  import Raty from "../raty.js"
- console.log("bbb");
  window.raty = function(elem,opt){
     var raty = new Raty(elem,opt);
     raty.init();

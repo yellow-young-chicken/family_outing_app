@@ -1,0 +1,27 @@
+<h1>いいね一覧</h1>
+<% @favorite_posts.each do |post|%>
+  <%= link_to post_path(post.id) do %>
+    <% post.get_images.each do |image| %>
+      <%= image_tag image.variant(resize_to_limit: [200, 200]).processed %>
+    <% end %>
+  <% end %>
+  <p>タイトル：<%= post.title %></p>
+  <p>説明：<%= post.post_content %></p>
+  <p>遊んだ場所：<%= post.spot.spot_name_i18n %></p>
+  <p><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
+
+    <% if post.favorited_by?(current_customer) %>
+
+    <%= link_to post_favorites_path(post), method: :delete do %>
+      ♥<%= post.favorites.count %> いいね
+    <% end %>
+    <% else %>
+    <%= link_to post_favorites_path(post), method: :post do %>
+      ♡<%= post.favorites.count %> いいね
+    <% end %>
+  <% end %>
+
+<% end %>
+
+<p><%= link_to"ユーザー詳細に戻る",customer_path(@customer.id) %> </p>
+
