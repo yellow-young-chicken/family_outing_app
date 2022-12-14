@@ -87,34 +87,20 @@ $(function(){
 </style>
 
 <script>
-function initMap() {
-  const myLatlng = { lat: -25.363, lng: 131.044 };
-  const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 4,
-    center: myLatlng,
-  });
-  // Create the initial InfoWindow.
-  let infoWindow = new google.maps.InfoWindow({
-    content: "Click the map to get Lat/Lng!",
-    position: myLatlng,
+let map
+
+function initMap(){
+  geocoder = new google.maps.Geocoder()
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 40.7828, lng:-73.9653},
+    zoom: 12,
   });
 
-  infoWindow.open(map);
-  // Configure the click listener.
-  map.addListener("click", (mapsMouseEvent) => {
-    // Close the current InfoWindow.
-    infoWindow.close();
-    // Create a new InfoWindow.
-    infoWindow = new google.maps.InfoWindow({
-      position: mapsMouseEvent.latLng,
-    });
-    infoWindow.setContent(
-      JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
-    );
-    infoWindow.open(map);
+  marker = new google.maps.Marker({
+    position:  {lat: 40.7828, lng:-73.9653},
+    map: map
   });
 }
-
-window.initMap = initMap;
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoaCJ0ekYWb3ZunNoB6G9NvCEc7zHK350&callback=initMap" async defer></script>
