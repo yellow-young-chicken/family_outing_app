@@ -21,6 +21,9 @@
   <%= f.label "投稿内容" %>
   <%= f.text_area :post_content %>
   <%= f.label "遊んだ場所" %>
+  <% hidden_field :latitude, :value => nil ,id: "latitude_input" %>
+  <% hidden_field :longitude, :value => nil ,id: "longitude_input" %>
+
   <!--@spot_id_pairでspot_nameをidに変換しております。-->
   <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), @spot_id_pair[k]]}, include_blank: "選択して下さい"  %>
 
@@ -66,9 +69,61 @@
 
   <% end %>
 
+
+
+
   <%= f.submit "投稿" %>
 <% end %>
 
 
 
+
+
 <p><%= link_to"HOMEに戻る",root_path %> </p>
+
+
+
+
+
+<h2>gmap</h2>
+<div id='map'></div>
+
+<style>
+#map {
+  height: 600px;
+  width: 600px;
+}
+</style>
+
+<script>
+function initMap() {
+  const myLatlng = { lat: -25.363, lng: 131.044 };
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 4,
+    center: myLatlng,
+  });
+  // Create the initial InfoWindow.
+  let infoWindow = new google.maps.InfoWindow({
+    content: "Click the map to get Lat/Lng!",
+    position: myLatlng,
+  });
+
+  infoWindow.open(map);
+  // Configure the click listener.
+  map.addListener("click", (mapsMouseEvent) => {
+    // Close the current InfoWindow.
+    infoWindow.close();
+    // Create a new InfoWindow.
+    infoWindow = new google.maps.InfoWindow({
+      position: mapsMouseEvent.latLng,
+    });
+    infoWindow.setContent(
+      JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+    );
+    infoWindow.open(map);
+  });
+}
+
+window.initMap = initMap;
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoaCJ0ekYWb3ZunNoB6G9NvCEc7zHK350&callback=initMap" async defer></script>
