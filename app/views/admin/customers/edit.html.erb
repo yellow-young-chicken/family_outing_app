@@ -1,0 +1,69 @@
+編集途中！　ラベルに変更などやる！
+
+
+<div class="container pb-5">
+ <div class="row">
+  <div class="col-12 py-3 text-center ">
+   <h3 class="m-4 font-weight-bold">
+    <%= @customer.last_name %><% @customer.first_name %>さんの会員詳細
+   </h3>
+  </div>
+  </div>
+
+  <div class="row d-flex justify-content-center">
+   <div class="col-md-8">
+    <table class="table table-striped text-center" style="color:white;">
+   　 <tbody>
+ 　　  <%= form_with model: @customer, url: admin_customer_path(@customer.id), method: :patch do |f| %>
+ 　　  <tr>
+ 　　    <th>会員ID</th>
+ 　　    <td><%= @customer.id %></td>
+ 　　  </tr>
+ 　　  <tr>
+ 　　    <th>氏名</th>
+ 　　    <td><%= f.text_field :last_name %></br>
+ 　　        <%= f.text_field :first_name %>
+ 　　    </td>
+ 　　  </tr>
+ 　　  <tr>
+ 　　    <th>フリガナ</th>
+ 　　    <td><%= f.text_field :last_name_kana %></br>
+ 　　        <%= f.text_field :first_name_kana %>
+ 　　   </td>
+ 　　  </tr>
+ 　　  <tr>
+ 　　    <th>郵便番号</th>
+ 　　    <td><%= f.text_field :postal_code %></td>
+ 　　  </tr>
+ 　　  <tr>
+ 　　    <th>住所</th>
+      <td><%= f.text_field :address %></td>
+    </tr>
+    <tr>
+      <th>電話番号</th>
+      <td><%= f.text_field :phone_number %></td>
+    </tr>
+    <tr>
+      <th>メールアドレス</th>
+      <td><%= f.email_field :email %></td>
+    </tr>
+    <tr>
+      <th>会員ステータス</th>
+      <td>
+      <%= f.radio_button :is_deleted, :true %>
+      <%= f.label :is_deleted, "退会済", {value: :true, style: "display: inline-block;"} %>
+      <%= f.radio_button :is_deleted, :false %>
+      <%= f.label :is_deleted, "有効", {value: :false, style: "display: inline-block;"} %>
+      </td>
+      </td>
+     </tr>
+    </tbody>
+   </table>
+   </div>
+   </div>
+
+   <div class="row d-flex justify-content-center">
+    <%= f.submit "変更を保存", class: "btn btn-success"%>
+    <% end %>
+  </div>
+ </div>
