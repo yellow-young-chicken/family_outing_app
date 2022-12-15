@@ -59,5 +59,18 @@ class Customer < ApplicationRecord
       customer.password = SecureRandom.urlsafe_base64
     end
   end
+  
+  # 検索のためのメゾットです。
+    def self.search_for(content, method)
+    if method == 'perfect'
+      Customer.where(account_name: content)
+    elsif method == 'forward'
+      Customer.where('account_name LIKE ?', content + '%')
+    elsif method == 'backward'
+      Customer.where('account_name LIKE ?', '%' + content)
+    else
+      Customer.where('account_name LIKE ?', '%' + content + '%')
+    end
+  end
 
 end

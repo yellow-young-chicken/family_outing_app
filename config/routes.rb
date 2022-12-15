@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
   # 管理者用
-  # URL /admin/sign_in ...
   devise_for :admin,skip: [:registrations, :passwords] ,controllers: {
     sessions: "admin/sessions"
   }
@@ -9,11 +8,10 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: 'homes#top'
     resources :customers
-    
+
   end
 
-  # 顧客用
-  # URL /customers/sign_in ...
+  # ユーザー用
   devise_for :customers,controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions',
@@ -27,6 +25,7 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: 'homes#top'
     get 'about'=>"homes#about",as: "about"
+    get 'search' =>"searches#search"
     resources :posts do
       resource :favorites, only: [:create, :destroy]
       resources :comments, only: [:create, :destroy]
