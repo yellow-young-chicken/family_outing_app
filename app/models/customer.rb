@@ -61,16 +61,27 @@ class Customer < ApplicationRecord
   end
   
   # 検索のためのメゾットです。
-    def self.search_for(content, method)
-    if method == 'perfect'
-      Customer.where(account_name: content)
-    elsif method == 'forward'
-      Customer.where('account_name LIKE ?', content + '%')
-    elsif method == 'backward'
-      Customer.where('account_name LIKE ?', '%' + content)
+  def self.search_for(content, method, spot_id)
+    customers = 
+    if content.blank?
+      Customer.all
     else
-      Customer.where('account_name LIKE ?', '%' + content + '%')
+      if method == 'perfect'
+        Customer.where(account_name: content)
+      elsif method == 'forward'
+        Customer.where('account_name LIKE ?', content + '%')
+      elsif method == 'backward'
+        Customer.where('account_name LIKE ?', '%' + content)
+      else
+        Customer.where('account_name LIKE ?', '%' + content + '%')
+      end
     end
+    spot_id.blank? ? customers : customers.where(spot_id: spot_id)
+    #if spot_id.blank?
+      #customers
+    #else
+      #csutomers.where()
+    #end
   end
 
 end

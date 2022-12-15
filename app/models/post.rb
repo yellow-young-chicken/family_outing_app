@@ -38,16 +38,22 @@ def favorited_by?(customer)
 end
 
   # 検索のためのメゾットです。
-  def self.search_for(content, method)
-    if method == 'perfect'
-      Post.where(title: content)
-    elsif method == 'forward'
-      Post.where('title LIKE ?', content+'%')
-    elsif method == 'backward'
-      Post.where('title LIKE ?', '%'+content)
-    else
-      Post.where('title LIKE ?', '%'+content+'%')
-    end
+  def self.search_for(content, method, spot_id)
+    spots =
+      if content.blank?
+        Post.all
+      else
+        if method == 'perfect'
+          Post.where(title: content)
+        elsif method == 'forward'
+          Post.where('title LIKE ?', content+'%')
+        elsif method == 'backward'
+          Post.where('title LIKE ?', '%'+content)
+        else
+          Post.where('title LIKE ?', '%'+content+'%')
+        end
+      end
+    spot_id.blank? ? spots : spots.where(spot_id: spot_id) 
   end
 
 
