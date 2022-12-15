@@ -1,0 +1,81 @@
+<% if @model == 'customer' %>
+
+	<h3>ユーザー検索結果 "<%= @content %>"</h3>
+
+	<% @records .each do |customer| %>
+<div>
+  <%= link_to customer_path(customer.id) do %>
+  <p>ユーザー画像：<%= image_tag customer.get_profile_image(100,100) %></p>
+   <% end %>
+  <p>ユーザーネーム：<%= customer.account_name %></p>
+  <p>自己紹介：<%= customer.introduction %></p>
+  <p>居住地：<%= customer.spot.spot_name_i18n %></p>
+  <p><%= render "public/relationships/relationships", customer: customer %></p>
+  <p>follows<%= link_to customer.followings.count, customer_followings_path(customer.id) %></p>
+  <p>followers<%= link_to customer.followers.count, customer_followers_path(customer.id) %></p>
+</div>
+<% end %>
+
+<p><%= link_to"HOMEに戻る",root_path %> </p>
+
+
+
+<% elsif @model == 'post' %>
+	<h3>投稿検索結果 "<%= @content %>"</h3>
+
+
+	<% @records.each do |post| %>
+<div>
+  <%= link_to customer_path(post.customer.id) do %>
+  <p>投稿ユーザー画像：<%= image_tag post.customer.get_profile_image(100,100) %></p>
+  <% end %>
+  <p>ユーザーネーム：<%= post.customer.account_name %></p>
+  <p>ユーザー居住地：<%= post.customer.spot.spot_name_i18n %></p>
+
+  投稿画像:
+  <%= link_to post_path(post.id) do %>
+    <% post.get_images.each do |image| %>
+      <%= image_tag image.variant(resize_to_limit: [200, 200]).processed %>
+    <% end %>
+  <% end %>
+
+  <p>タイトル:<%= post.title %></p>
+  <!--<p>説明：<%#post.post_content %></p>-->
+  <p>遊んだ場所：<%= post.spot.spot_name_i18n %></p>
+  <div id="rate_<%= post.id %>"></div>
+<script>
+$(function(){
+
+    let raty_<%= post.id %> = document.querySelector('#rate_<%= post.id %>');
+    rate_<%= post.id %>.innerHTML = ""
+    let option_<%= post.id %> = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
+        score: "<%= post.rate %>",
+        readOnly: true,
+      };
+    raty(raty_<%= post.id %> ,option_<%= post.id %>);
+});
+</script>
+
+  <% if post.favorited_by?(current_customer) %>
+
+    <%= link_to post_favorites_path(post), method: :delete do %>
+      ♥<%= post.favorites.count %> いいね
+    <% end %>
+    <% else %>
+    <%= link_to post_favorites_path(post), method: :post do %>
+      ♡<%= post.favorites.count %> いいね
+    <% end %>
+  <% end %>
+   <p><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
+
+</div>
+
+<% end %>
+
+<p><%= link_to"HOMEに戻る",root_path %> </p>
+
+
+<% end %>

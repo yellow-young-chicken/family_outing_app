@@ -16,11 +16,11 @@ class Post < ApplicationRecord
     less_than_or_equal_to: 5,
     greater_than_or_equal_to: 1
   }, presence: true
-    
+
   # 写真の投稿制限のためのメゾットを呼び出しております。
   validate :image_type, :image_size, :image_length
-  
-  
+
+
 
 
   has_many_attached :images
@@ -36,6 +36,20 @@ class Post < ApplicationRecord
 def favorited_by?(customer)
   favorites.exists?(customer_id: customer.id)
 end
+
+  # 検索のためのメゾットです。
+  def self.search_for(content, method)
+    if method == 'perfect'
+      Post.where(title: content)
+    elsif method == 'forward'
+      Post.where('title LIKE ?', content+'%')
+    elsif method == 'backward'
+      Post.where('title LIKE ?', '%'+content)
+    else
+      Post.where('title LIKE ?', '%'+content+'%')
+    end
+  end
+
 
 private
 
