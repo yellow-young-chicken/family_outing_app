@@ -9,7 +9,7 @@ class Public::PostsController < ApplicationController
   def create
     @post = current_customer.posts.build(post_params)
     if @post.save
-      flash.now[:notice] = "投稿に成功しました！"
+      flash[:notice] = "投稿に成功しました！"
       redirect_to posts_path
     else
       # renderの際のnilエラー解消のため、＠spot_id_pairを入れております。
@@ -37,7 +37,7 @@ class Public::PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     if  @post.update(post_params)
-      flash.now[:notice] = "編集に成功しました！"
+      flash[:notice] = "編集に成功しました！"
       redirect_to post_path(@post.id)
     else
       @spot_id_pair = Spot.pluck('spot_name, id').to_h
@@ -48,7 +48,7 @@ class Public::PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
-    flash.now[:notice] = "削除が完了しました！"
+    flash[:notice] = "削除が完了しました"
     redirect_to posts_path
   end
 

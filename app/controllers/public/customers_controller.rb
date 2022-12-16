@@ -1,13 +1,16 @@
 class Public::CustomersController < ApplicationController
 
-  before_action :is_matching_login_customer, only: [:edit, :update]
+
+  before_action :authenticate_customer!
+  before_action :is_matching_login_customer, only: [:edit, :update, :destroy]
+  before_action :ensure_normal_customer, only: [:destroy,:update]
 
 
   def new
   end
 
   def index
-    @customers = Customer.page(params[:page])
+    @customers = Customer.page(params[:page]).order(created_at: "DESC")
   end
 
   def show
@@ -25,7 +28,7 @@ class Public::CustomersController < ApplicationController
   def update
     @customer = Customer.find(params[:id])
     if @customer.update(customer_params)
-      flash.now[:notice] = "編集に成功しました!"
+      flash[:notice] = "編集に成功しました!"
       redirect_to customer_path(@customer.id)
     else
       @spot_id_pair = Spot.pluck('spot_name, id').to_h
@@ -33,11 +36,22 @@ class Public::CustomersController < ApplicationController
     end
   end
 
+    def destroy
+    @customer = Customer.find(params[:id])
+    @customer.destroy
+    flash[:notice] = "削除が完了しました"
+    redirect_to root_path
+    end
+
+
+
   def favorites
     @customer = Customer.find(params[:id])
     favorites = Favourite.where(customer_id: @customer.id).pluck(:post_id)
     @favorite_posts = Post.find(favorites)
   end
+
+
 
 
   private
@@ -54,6 +68,15 @@ class Public::CustomersController < ApplicationController
     login_customer_id = current_customer.id
     if(customer_id != login_customer_id)
       redirect_to posts_path
+    end
+  end
+
+    # ゲストユーザーを削除できないようにするためのメゾットです。
+  # カスタマーコントローラーの際は、reso~~がcurrentcus~~に変更
+  def ensure_normal_customer
+    if current_customer.email == 'guest@example.com'
+      flash[:notice] = 'ゲストユーザーの更新・削除はできません。'
+      redirect_to root_path
     end
   end
 

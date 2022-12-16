@@ -38,8 +38,8 @@ $(function(){
 
 
   <% if @post.customer.id == current_customer.id %>
-    <%= link_to "編集", edit_post_path(@post) %>
-    <%= link_to "削除", post_path(@post), method: :delete %>
+    <%= link_to "編集する", edit_post_path(@post) %>
+    <%= link_to "投稿を削除する", post_path, class: "btn btn-danger", method: :delete, data: { confirm: '本当に削除しますか?' } %>
   <% end %>
 
   <% if @post.favorited_by?(current_customer) %>

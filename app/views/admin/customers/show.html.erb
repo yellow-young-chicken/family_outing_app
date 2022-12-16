@@ -1,2 +1,50 @@
-<h1>Admin::Customers#show</h1>
-<p>Find me in app/views/admin/customers/show.html.erb</p>
+<h1>ユーザー詳細ページ</h1>
+
+<h2>ユーザーネーム：<%= @customer.account_name %></h2>
+<p>会員ID:<%= @customer.id %></p>
+<%= image_tag @customer.get_profile_image(100,100) %>
+ <p><%= link_to "プロフィール編集", edit_admin_customer_path(@customer) %></p>
+  <p>自己紹介：<%= @customer.introduction %></p>
+  <p>居住地：<%= @customer.spot.spot_name_i18n %></p>
+  <p>follows<%= link_to @customer.followings.count, customer_followings_path(@customer.id) %></p>
+  <p>followers<%= link_to @customer.followers.count, customer_followers_path(@customer.id) %></p>
+  <p><%=link_to"お気に入り投稿",favorites_customer_path(@customer.id) %></p>
+
+<% @posts.each do |post| %>
+<div>
+  投稿画像:
+  <%= link_to post_path(post.id) do %>
+    <% post.get_images.each do |image| %>
+      <%= image_tag image.variant(resize_to_limit: [200, 200]).processed %>
+    <% end %>
+  <% end %>
+  <p>タイトル：<%= post.title %></p>
+  <p>説明：<%= post.post_content %></p>
+  <p>遊んだ場所：<%= post.spot.spot_name_i18n %></p>
+  <p><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
+
+   <div id="rate_show<%= post.id %>"></div>
+<script>
+$(function(){
+
+
+    let raty_show<%= post.id %> = document.querySelector('#rate_show<%= post.id %>');
+    rate_show<%= post.id %>.innerHTML = ""
+    let option_show<%= post.id %> = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
+        score: "<%= post.rate %>",
+        readOnly: true,
+      };
+    raty(raty_show<%= post.id %> ,option_show<%= post.id %>);
+});
+</script>
+
+
+</div>
+<% end %>
+
+<p><%= link_to"ユーザー一覧に戻る",customers_path %> </p>
+
+<%= paginate @posts %>

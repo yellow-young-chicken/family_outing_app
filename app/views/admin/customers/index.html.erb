@@ -7,10 +7,10 @@
     <thead class="thead-dark">
       <tr>
         <th scope="col">会員ID</th>
+        <th scope="col">プロフィール画像</th>
         <th scope="col">氏名</th>
         <th scope="col">アカウントネーム</th>
         <th scope="col">メールアドレス</th>
-        <th scope="col">ステータス</th>
       </tr>
     </thead>
 
@@ -20,17 +20,11 @@
       <th scope="row"><%= customer.id %></th>
       <td>
         <%= link_to admin_customer_path(customer), class: "text-white" do %>
-        <%= customer.last_name %><% customer.first_name %></td>
-      <td><%= customer.email %></td>
+        <p>ユーザー画像：<%= image_tag customer.get_profile_image(100,100) %></p></td>
+       <td><%= customer.last_name %><% customer.first_name %></td>
       <td><%= customer.account_name %></td>
+      <td><%= customer.email %></td>
         <% end %>
-      <td>
-        <% if customer.is_deleted %>
-         <p class="text-danger"><strong>退会済</strong></p>
-         <% else %>
-         <p class="text-success"><strong>有効</strong></p>
-         <% end %>
-        </td>
         </tr>
       <% end %>
     </tbody>

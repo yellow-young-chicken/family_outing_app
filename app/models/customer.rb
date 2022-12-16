@@ -3,13 +3,13 @@ class Customer < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-         
-  belongs_to :spot 
+
+  belongs_to :spot
 
   validates :account_name, uniqueness: true, length: { minimum:2 , maximum:20}
   validates :introduction, length: {maximum:200}
-  
-  
+
+
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -57,12 +57,14 @@ class Customer < ApplicationRecord
   def self.guest
     find_or_create_by!(email: 'guest@example.com') do |customer|
       customer.password = SecureRandom.urlsafe_base64
+      customer.account_name = "ゲスト"
+      customer.spot_id = "1"
     end
   end
-  
+
   # 検索のためのメゾットです。
   def self.search_for(content, method, spot_id)
-    customers = 
+    customers =
     if content.blank?
       Customer.all
     else
@@ -77,6 +79,7 @@ class Customer < ApplicationRecord
       end
     end
     spot_id.blank? ? customers : customers.where(spot_id: spot_id)
+    #spot_id.blank? ? ~~ は下記と同じ内容です。
     #if spot_id.blank?
       #customers
     #else

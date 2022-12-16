@@ -26,12 +26,6 @@
 
 	<% @records.each do |post| %>
 <div>
-  <%= link_to customer_path(post.customer.id) do %>
-  <p>投稿ユーザー画像：<%= image_tag post.customer.get_profile_image(100,100) %></p>
-  <% end %>
-  <p>ユーザーネーム：<%= post.customer.account_name %></p>
-  <p>ユーザー居住地：<%= post.customer.spot.spot_name_i18n %></p>
-
   投稿画像:
   <%= link_to post_path(post.id) do %>
     <% post.get_images.each do |image| %>
