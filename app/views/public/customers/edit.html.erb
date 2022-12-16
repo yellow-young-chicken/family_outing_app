@@ -23,5 +23,22 @@
   <%= f.label "自己紹介" %>
   <%= f.text_area :introduction %>
 
-  <%= f.submit "変更を保存" %>
+  			名前
+				<%= f.label "(姓)", class: "customer_name" %> <%= f.text_field :first_name %>
+				<%= f.label :last_name, "(名)", class: "customer_name" %> <%= f.text_field :last_name %>
+	      フリガナ
+				<%= f.label "(セイ)" %> <%= f.text_field :first_name_kana %>
+				<%= f.label :last_name_kana, "(メイ)" %> <%= f.text_field :last_name_kana %>
+
+
+				<%= f.label "メールアドレス" %>
+				<%= f.email_field :email, autocomplete: "email" %>
+
+				<%= f.label "電話番号" %>
+				<%= f.text_field :phone_number %>
+
+
+  <%= f.submit "編集内容を保存する", class: "btn btn-primary" %>
+  <%= link_to "マイページに戻る",customer_path(current_customer.id), class: "btn btn-primary" %>
+  <%= link_to "退会する", customer_path, class: "btn btn-danger", method: :delete, data: { confirm: '本当に削除しますか?' } %>
 <% end %>

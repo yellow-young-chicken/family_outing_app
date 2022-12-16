@@ -36,9 +36,30 @@
     <% end %>
   <% end %>
 
+
+   <div id="rate_show<%= post.id %>"></div>
+<script>
+$(function(){
+
+
+    let raty_show<%= post.id %> = document.querySelector('#rate_show<%= post.id %>');
+    rate_show<%= post.id %>.innerHTML = ""
+    let option_show<%= post.id %> = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
+        score: "<%= post.rate %>",
+        readOnly: true,
+      };
+    raty(raty_show<%= post.id %> ,option_show<%= post.id %>);
+});
+</script>
+
+
 </div>
 <% end %>
 
 <p><%= link_to"ユーザー一覧に戻る",customers_path %> </p>
+
 
 <%= paginate @posts %>

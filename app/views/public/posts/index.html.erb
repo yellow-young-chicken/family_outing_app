@@ -1,7 +1,5 @@
 <h1>投稿一覧</h1>
 
-<%= flash[:notice] %>
-
 <% @posts.each do |post| %>
 <div>
   <%= link_to customer_path(post.customer.id) do %>

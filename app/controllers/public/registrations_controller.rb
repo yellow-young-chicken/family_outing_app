@@ -3,7 +3,6 @@
 class Public::RegistrationsController < Devise::RegistrationsController
 
   before_action :configure_permitted_parameters, only: [:create]
-  before_action :ensure_normal_customer, only: [:destroy,:update]
   before_action :configure_update_params, only: [:update]
 
 
@@ -87,12 +86,6 @@ class Public::RegistrationsController < Devise::RegistrationsController
    devise_parameter_sanitizer.permit(:account_update, keys: [:email,:password])
   end
 
-  # ゲストユーザーを削除できないようにするためのメゾットです。
-  # カスタマーコントローラーの際は、reso~~がcurrentcus~~に変更
-  def ensure_normal_customer
-    if resource.email == 'guest@example.com'
-      redirect_to root_path, alert: 'ゲストユーザーの更新・削除はできません。'
-    end
-  end
+
 
 end

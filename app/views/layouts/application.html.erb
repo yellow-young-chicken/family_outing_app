@@ -60,6 +60,13 @@
         <% end %>
       </li>
 
+      <li>
+        <%= link_to admin_customers_path do %>
+         ユーザー一覧
+        <% end %>
+      </li>
+
+
       <% else %>
       <li>
         <%= link_to about_path do %>
@@ -91,6 +98,9 @@
 
     </header>
     <main>
+    <% flash.each do |message_type, message| %>
+      <%= message %>
+    <% end %>
 
     <%= yield %>
     </main>
