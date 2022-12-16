@@ -98,9 +98,11 @@
 
     </header>
     <main>
+
     <% flash.each do |message_type, message| %>
-      <%= message %>
+     <p class="alert alert-info"> <%= message %></p>
     <% end %>
+
 
     <%= yield %>
     </main>
