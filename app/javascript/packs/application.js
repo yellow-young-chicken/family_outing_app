@@ -12,6 +12,8 @@ import jQuery from "jquery"
 import "popper.js"
 import "bootstrap"
 
+import  "data-confirm-modal"
+
 
 import "jquery";
 import "popper.js";
