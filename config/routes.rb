@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     get 'about'=>"homes#about",as: "about"
     get 'search' =>"searches#search"
     get 'favorites_ranking' =>"posts#favorites_ranking"
+    get 'follow_posts' =>"posts#follow_posts"
+    get 'my_posts' =>"posts#my_posts"
     resources :posts do
       resource :favorites, only: [:create, :destroy]
       resources :comments, only: [:create, :destroy]

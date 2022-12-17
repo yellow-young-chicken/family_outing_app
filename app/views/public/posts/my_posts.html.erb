@@ -1,8 +1,8 @@
-<h1>いいね多い順</h1>
+<h1>自分の投稿</h1>
 
 <%= link_to '投稿新規順', posts_path %>
+<%= link_to 'いいね順', favorites_ranking_path %>
 <%= link_to 'フォローした人の投稿', follow_posts_path %>
-<%= link_to '自分の投稿', my_posts_path %>
 
 <%= render "index", posts: @posts %>
 
