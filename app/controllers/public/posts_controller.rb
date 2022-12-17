@@ -27,6 +27,16 @@ class Public::PostsController < ApplicationController
     @posts = Post.includes(:liked_customers).sort {|a,b| b.liked_customers.size <=> a.liked_customers.size}
   end
 
+  def follow_posts
+    @posts = Post.where(customer_id: [current_customer.following_ids])
+    # @posts = Post.where(customer_id: [current_customer.id, *current_customer.following_ids])
+  end
+
+  def my_posts
+    @posts = Post.where(customer_id: current_customer.id)
+  end
+
+
 
   def show
     @post = Post.find(params[:id])
