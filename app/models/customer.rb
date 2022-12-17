@@ -15,6 +15,7 @@ class Customer < ApplicationRecord
   has_many :comments, dependent: :destroy
     # SQLのエラーが出てしまったため、クラス指定をしております。
   has_many :favorites, dependent: :destroy, class_name: "Favourite"
+  has_many :liked_posts, through: :favorites, source: :post
 
   # 自分がフォローされる（被フォロー）側の関係性
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
