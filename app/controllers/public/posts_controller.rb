@@ -19,9 +19,14 @@ class Public::PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.page(params[:page])
+    @posts = Post.page(params[:page]).order("created_at DESC")
 
   end
+
+  def favorites_ranking
+    @posts = Post.includes(:liked_customers).sort {|a,b| b.liked_customers.size <=> a.liked_customers.size}
+  end
+
 
   def show
     @post = Post.find(params[:id])

@@ -4,6 +4,7 @@ class Post < ApplicationRecord
   belongs_to :spot   # , optional:true
   # SQLのエラーが出てしまったため、クラス指定をしております。
   has_many :favorites, dependent: :destroy, class_name: "Favourite"
+  has_many :liked_customers, through: :favorites, source: :customer
   has_many :comments, dependent: :destroy
   has_many :post_tags
 
