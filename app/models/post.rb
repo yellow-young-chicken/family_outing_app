@@ -53,7 +53,7 @@ end
           Post.where('title LIKE ?', '%'+content+'%')
         end
       end
-    spot_id.blank? ? spots : spots.where(spot_id: spot_id) 
+    spot_id.blank? ? spots : spots.where(spot_id: spot_id)
   end
 
 
