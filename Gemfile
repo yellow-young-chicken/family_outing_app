@@ -68,3 +68,7 @@ gem 'rails-i18n'
 
 gem "gmaps4rails"
 gem "geocoder"
+
+gem 'data-confirm-modal'
+
+gem 'dotenv-rails'
