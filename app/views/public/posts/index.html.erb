@@ -49,16 +49,11 @@ $(function(){
 });
 </script>
 
-  <% if post.favorited_by?(current_customer) %>
+        <div class=<%= "favorite-" + post.id.to_s %> >
+            <%= render "public/favorites/btn", post: post %>
+        </div>
 
-    <%= link_to post_favorites_path(post), method: :delete do %>
-      ♥<%= post.favorites.count %> いいね
-    <% end %>
-    <% else %>
-    <%= link_to post_favorites_path(post), method: :post do %>
-      ♡<%= post.favorites.count %> いいね
-    <% end %>
-  <% end %>
+
    <p><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
 
 </div>
