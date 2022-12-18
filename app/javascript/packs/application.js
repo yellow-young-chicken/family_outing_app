@@ -8,11 +8,11 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
-import jQuery from "jquery"
-import "popper.js"
-import "bootstrap"
+//import jQuery from "jquery"
+//import "popper.js"
+//import "bootstrap"
 
-import  "data-confirm-modal"
+//import  "data-confirm-modal"
 
 
 import "jquery";
@@ -25,11 +25,10 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
-global.$ = jQuery;
-window.$ = jQuery;
+window.$ = window.jQuery = require('jquery');
 
- import Raty from "../raty.js"
- window.raty = function(elem,opt){
+import Raty from "../raty.js"
+window.raty = function(elem,opt){
     var raty = new Raty(elem,opt);
     raty.init();
     return raty;
