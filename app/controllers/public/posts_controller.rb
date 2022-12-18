@@ -19,12 +19,18 @@ class Public::PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.page(params[:page]).order("created_at DESC")
 
+    @tags = Post.tag_counts_on(:tags).order('count DESC')     # 全タグ(Postモデルからtagsカラムを降順で取得)
+    if @tag = params[:tag_name]   # タグ検索用
+      @posts = Post.tagged_with(@tag).page(params[:page]).order("created_at DESC")
+    else
+      @posts = Post.page(params[:page]).order("created_at DESC")
+    end
   end
 
   def favorites_ranking
     @posts = Post.includes(:liked_customers).sort {|a,b| b.liked_customers.size <=> a.liked_customers.size}
+
   end
 
   def follow_posts
@@ -33,6 +39,7 @@ class Public::PostsController < ApplicationController
   end
 
   def my_posts
+    @tags = Post.tag_counts_on(:tags).order('count DESC')
     @posts = Post.where(customer_id: current_customer.id)
   end
 
@@ -71,7 +78,7 @@ class Public::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :post_content, :latitude, :longitude, :rate, :spot_id, images: [])
+    params.require(:post).permit(:title, :post_content, :latitude, :longitude, :rate, :tag_list, :spot_id, images: [])
   end
 
 end
