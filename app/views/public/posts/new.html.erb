@@ -11,6 +11,9 @@
   </ul>
 <% end %>
 
+
+
+
 <%= form_with model: @post, url: posts_path, local: true do |f| %>
 
   <%= f.label "画像" %>
@@ -20,6 +23,13 @@
   <%= f.text_field :title %>
   <%= f.label "投稿内容" %>
   <%= f.text_area :post_content %>
+
+  <%= f.label :tag_list %>
+  <%= f.text_field :tag_list, value: @post.tag_list.join(',') %>
+
+
+
+
   <%= f.label "遊んだ場所" %>
 
   <!--@spot_id_pairでspot_nameをidに変換しております。-->

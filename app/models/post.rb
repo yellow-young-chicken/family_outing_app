@@ -22,6 +22,8 @@ class Post < ApplicationRecord
   validate :image_type, :image_size, :image_length
 
 
+acts_as_taggable_on :tags
+
 
 
   has_many_attached :images
