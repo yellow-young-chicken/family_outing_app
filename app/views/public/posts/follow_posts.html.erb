@@ -4,5 +4,5 @@
 <%= link_to 'いいね順', favorites_ranking_path %>
 <%= link_to '自分の投稿', my_posts_path %>
 
-<%= render "index", posts: @posts %>
+<%= render "index", posts: @posts, tags: @tags, tag: nil %>
 

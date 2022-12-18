@@ -24,13 +24,13 @@
   <%= f.label "投稿内容" %>
   <%= f.text_area :post_content %>
 
-  <%= f.label :tag_list %>
+  <%= f.label :tag_list %>（,で区切って記載ください。）
   <%= f.text_field :tag_list, value: @post.tag_list.join(',') %>
 
 
 
 
-  <%= f.label "遊んだ場所" %>
+  <%= f.label "都道府県" %>
 
   <!--@spot_id_pairでspot_nameをidに変換しております。-->
   <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), @spot_id_pair[k]]}, include_blank: "選択して下さい"  %>
@@ -88,10 +88,10 @@
 <% end %>
 
 
-<h2>gmap</h2>
+<h2>gmap（遊んだ場所を登録してください）</h2>
 
 <input id="address" type="textbox" value="東京駅" placeholder="ここに入力してください。">
-<input type="button" value="検索" onclick="codeAddress()">
+<input type="button" value="登録" onclick="codeAddress()">
 
 <!--<div id="display"></div>-->
 
