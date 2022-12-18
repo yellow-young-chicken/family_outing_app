@@ -78,16 +78,9 @@
     <%= link_to "投稿を削除する", post_path, class: "btn btn-danger", method: :delete, data: { confirm: '本当に削除しますか?' } %>
   <% end %>
 
-  <% if @post.favorited_by?(current_customer) %>
-
-    <%= link_to post_favorites_path(@post), method: :delete do %>
-      ♥<%= @post.favorites.count %> いいね
-    <% end %>
-    <% else %>
-    <%= link_to post_favorites_path(@post), method: :post do %>
-      ♡<%= @post.favorites.count %> いいね
-    <% end %>
-  <% end %>
+        <div class=<%= "favorite-" + @post.id.to_s %> >
+            <%= render "public/favorites/btn", post: @post %>
+        </div>
 
 
           <div class="comments-counter">
