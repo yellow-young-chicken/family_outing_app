@@ -84,9 +84,9 @@ end
 
      def create_notification_comment!(current_customer, comment_id)
     # 自分以外にコメントしている人をすべて取得し、全員に通知を送る
-    temp_ids = Comment.select(:user_id).where(post_id: id).where.not(customer_id: current_customer.id).distinct
+    temp_ids = Comment.select(:customer_id).where(post_id: id).where.not(customer_id: current_customer.id).distinct
     temp_ids.each do |temp_id|
-      save_notification_comment!(current_customer, comment_id, temp_id['user_id'])
+      save_notification_comment!(current_customer, comment_id, temp_id['customer_id'])
     end
     # まだ誰もコメントしていない場合は、投稿者に通知を送る
     save_notification_comment!(current_customer, comment_id, customer_id) if temp_ids.blank?
