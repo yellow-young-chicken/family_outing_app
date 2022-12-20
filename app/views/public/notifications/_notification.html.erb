@@ -27,9 +27,10 @@
           <%= link_to "あなたの投稿", notification.post, style: "font-weight: bold;"%>
         <% else%>
           <%= link_to post_path(notification.post) do%>
-            <%= image_tag visitor.get_profile_image(150,150), class: "icon_mini" %>
-          <%end%>
+            <%= image_tag visitor.get_profile_image(100,100), class: "icon_mini" %>
+
           <%= notification.post.customer.account_name + 'さんの投稿'%>
+          <%end%>
         <%end%>
         <%= "にコメントしました" %>
         <p text-muted.mb-0><%= Comment.find_by(id: notification.comment_id)&.comment %></p>
@@ -38,7 +39,7 @@
   <p small.text-muted.text-right >
     <%= time_ago_in_words(notification.created_at).upcase %></p>
     </div>
-    </div>
+  </div>
   <hr>
 
 
