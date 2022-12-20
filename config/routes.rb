@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
   scope module: :public do
     root to: 'homes#top'
+    resources :notifications, only: :index
     get 'about'=>"homes#about",as: "about"
     get 'search' =>"searches#search"
     get 'favorites_ranking' =>"posts#favorites_ranking"
