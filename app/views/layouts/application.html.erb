@@ -13,113 +13,44 @@
   </head>
 
   <body>
+    <header>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-      LOGO
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav ml-auto">
+  <nav class="navbar navbar-expand-lg navbar-light" style="" >
+    <div class="container"> <a class="navbar-brand text-primary" href="/">
+        <%=image_tag "twitter_header_photo_1",size:"200x200" , class:"img-fluid"%>
+      </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav ml-auto">
         <% if customer_signed_in? %>
-          <div class="nav-item nav-link">
-            ようこそ、<%= current_customer.account_name %>さん!!
+          <div class = "d-flex align-items-center" style="font-size:15px">
+            ようこそ、<%= current_customer.account_name %>さん !!
           </div>
-          <%= link_to 'ログアウト', destroy_customer_session_path, class: 'nav-item nav-link', method: :delete %>
-          <%= link_to '投稿', new_post_path, class: 'nav-item nav-link' %>
-          <%= link_to '投稿一覧', posts_path, class: 'nav-item nav-link' %>
-          <%= link_to 'マイページ', customer_path(current_customer.id), class: 'nav-item nav-link' %>
+          <li class="nav-item"><%= link_to 'ログアウト', destroy_customer_session_path, class: 'nav-item nav-link', method: :delete %></li>
+          <li class="nav-item"><%= link_to '投稿', new_post_path, class: 'nav-item nav-link' %></li>
+          <li class="nav-item"><%= link_to '投稿一覧', posts_path, class: 'nav-item nav-link' %></li>
+          <li class="nav-item"><%= link_to 'マイページ', customer_path(current_customer.id), class: 'nav-item nav-link' %></li>
           <%= render "public/partial/circle" %>
-        <% end %>
+          <% elsif admin_signed_in? %>
+          <div class = "d-flex align-items-center" style="font-size:20px">
+            管理者用
+          </div>
+          <li class="nav-item"><%= link_to destroy_admin_session_path, class: 'nav-item nav-link', method: :delete do %>ログアウト<% end %></li>
+          <li class="nav-item"><%= link_to admin_customers_path, class: 'nav-item nav-link' do %>ユーザー一覧<% end %></li>
+          <% else %>
+          <li class="nav-item"><%= link_to about_path, class: 'nav-item nav-link' do %>About<%end%></li>
+          <li class="nav-item"><%=link_to new_customer_session_path, class: 'nav-item nav-link' do %>ログイン<% end %></li>
+          <li class="nav-item"><%=link_to  new_customer_registration_path, class: 'nav-item nav-link' do %>新規登録<% end %></li>
+          <li class="nav-item"><%= link_to customers_guest_sign_in_path, class: 'nav-item nav-link', method: :post do %>ゲストログイン（閲覧用）<% end %></li>
+          <% end %>
+        </ul>
       </div>
     </div>
   </nav>
-
-    <header>
-      <% if customer_signed_in? %>
-      <div>ようこそ、<%= current_customer.account_name %>さん!!</div>
-
-      <li>
-      <%= link_to destroy_customer_session_path, method: :delete do %>
-        ログアウト
-      <% end %>
-      </li>
-
-      <li>
-      <%= link_to new_post_path do %>
-        投稿
-      <% end %>
-      </li>
-
-      <li>
-      <%= link_to posts_path do %>
-        投稿一覧
-      <% end %>
-      </li>
-
-      <li>
-      <%= link_to customer_path(current_customer.id) do %>
-        マイページ
-      <% end %>
-      </li>
+  </header>
 
 
-      <li>
-      <%= link_to customers_path do %>
-        ユーザー一覧
-      <% end %>
-      </li>
-
-      <%= render 'public/searches/form' %>
-
-
-      <% elsif admin_signed_in? %>
-
-      <li>
-        <%= link_to destroy_admin_session_path, method: :delete do %>
-         ログアウト
-        <% end %>
-      </li>
-
-      <li>
-        <%= link_to admin_customers_path do %>
-         ユーザー一覧
-        <% end %>
-      </li>
-
-
-      <% else %>
-      <li>
-        <%= link_to about_path do %>
-          About
-        <%end%>
-      </li>
-      <li>
-        <%=link_to new_customer_session_path do %>
-          ログイン
-        <% end %>
-      </li>
-
-      <li>
-        <%=link_to  new_customer_registration_path do %>
-          新規登録
-        <% end %>
-      </li>
-      <li>
-      <%= link_to customers_guest_sign_in_path, method: :post do %>
-      ゲストログイン（閲覧用）
-
-      <% end %>
-      </li>
-
-
-      <% end %>
-
-
-
-    </header>
     <main>
 
     <% flash.each do |message_type, message| %>
@@ -129,8 +60,17 @@
 
     <%= yield %>
     </main>
+
     <footer class="footer">
-      <p style= "text-align: center;">Family Outing</p>
+        <div class="py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <p class="mb-0">Family Outing</p>
+        </div>
+      </div>
+    </div>
+  </div>
 　　</footer>
 
   </body>
