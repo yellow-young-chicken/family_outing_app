@@ -1,25 +1,36 @@
-<h3>ログイン</h3>
-<h6>会員の方はこちらからログイン</h6>
+<div class="login-background-image">
+<div class="container py-5">
+  <div class="row">
+    <h3 class="col mb-4 text-left font-weight-bold">ログイン</h3>
+  </div>
+  <div class="row">
+    <h6 class="col m-2 text-left font-weight-bold">会員の方はこちらからログイン</h6>
+  </div>
+
 <%= form_with model: @customer, url: customer_session_path do |f| %>
-  <div class="field">
-    <%= f.label :"メールアドレス" %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email",:placeholder => "sample@example.com"%>
+  <div class="form-group row ml-5">
+    <%= f.label :"メールアドレス", class: "col-sm-3 control-label"  %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email",:placeholder => "sample@example.com", class: "col-sm-4 form-control-static"%>
   </div>
 
-  <div class="field">
+  <div class="form-group row ml-5">
     <%= f.label :"パスワード", class: "col-sm-3 control-label" %>
-    <%= f.password_field :password, autocomplete: "current-password"%>
+    <%= f.password_field :password, autocomplete: "current-password", class: "col-sm-4 form-control-static"%>
   </div>
 
- <div class="field">
-    <%= f.submit "ログイン" %>
+ <div class="actions col-8 text-center">
+    <%= f.submit "ログイン",class: 'btn btn-primary' %>
   </div>
 
 <% end %>
 
-    <h6>※会員登録がお済みでない方</h6>
+  <div class="row ml-5 mt-3">
+    <h6 class="col m-2 text-left font-weight-bold">※会員登録がお済みでない方</h6>
+  </div>
 
-    <div>
+  <div class="row">
+    <div class="col-4 offset-3">
       <%= link_to "こちら", new_customer_registration_path %> から新規登録を行ってください。
     </div>
+  </div>
   </div>
