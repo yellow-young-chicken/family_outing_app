@@ -1,20 +1,66 @@
-<h1>ユーザー一覧</h1>
+<div class="index-background-image">
+<div class="container">
+ <div class="row">
+  <div class="col">
+   <h2 class="m-4 text-center font-weight-bold">ユーザー一覧</h2>
+   </div>
+      <table class="table text-center" style="color:white;">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ユーザー画像</th>
+        <th scope="col">ユーザーネーム</th>
+        <th scope="col">自己紹介</th>
+        <th scope="col">居住地</th>
+        <th scope="col">フォロー</th>
+        <th scope="col">フォロワー数</th>
+        <th scope="col">フォロワーズ数</th>
+      </tr>
+    </thead
 
-<% @customers.each do |customer| %>
-<div>
-  <%= link_to customer_path(customer.id) do %>
-  <p>ユーザー画像：<%= image_tag customer.get_profile_image(100,100) %></p>
-   <% end %>
-  <p>ユーザーネーム：<%= customer.account_name %></p>
-  <p>自己紹介：<%= customer.introduction %></p>
-  <p>居住地：<%= customer.spot.spot_name_i18n %></p>
-  <p><%= render "public/relationships/relationships", customer: customer %></p>
-  <p>follows<%= link_to customer.followings.count, customer_followings_path(customer.id) %></p>
-  <p>followers<%= link_to customer.followers.count, customer_followers_path(customer.id) %></p>
+    <tbody>
+      <% @customers.each do |customer| %>
+      <tr>
+        <td>
+          <%= link_to customer_path(customer.id) do %>
+          <%= image_tag customer.get_profile_image(100,100), class:"rounded-circle"; %>
+           <% end %>
+        </td>
+        <td>
+          <%= customer.account_name %>
+        </td>
+        <td>
+          <%= customer.introduction %>
+        </td>
+        <td>
+          <%= customer.spot.spot_name_i18n %>
+        </td>
+        <td>
+          <%= render "public/relationships/relationships", customer: customer %>
+        </td>
+        <td>
+          <%= link_to customer.followings.count, customer_followings_path(customer.id) %>
+        </td>
+        <td>
+          <%= link_to customer.followers.count, customer_followers_path(customer.id) %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  </div>
+    <div class="row justify-content-center mt-3">
+    <div class='mr-5'>
+      <%= link_to"HOMEに戻る",root_path %>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-3">
+    <div class='mr-5'>
+      <%= paginate @customers , theme: 'twitter-bootstrap-4'%>
+    </div>
+  </div>
+ </div>
 </div>
-<% end %>
 
-<p><%= link_to"HOMEに戻る",root_path %> </p>
 
-<%= paginate @customers %>
 

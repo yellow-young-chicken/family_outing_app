@@ -1,16 +1,40 @@
-<h1>ユーザー詳細ページ</h1>
+            <div class="profile-container border-bottom py-3">
+                <div class="row text-center">
+                    <div class="col-md-12"><h1>ユーザー詳細ページ</h1></div>
+                </div>
 
-<h2>ユーザーネーム：<%= @customer.account_name %></h2>
-<%= image_tag @customer.get_profile_image(100,100) %>
-<% if @customer == current_customer %>
- <p><%= link_to "プロフィール編集", edit_customer_path(@customer) %></p>
-<% end %>
-  <p>自己紹介：<%= @customer.introduction %></p>
-  <p>居住地：<%= @customer.spot.spot_name_i18n %></p>
-  <p><%= render "public/relationships/relationships", customer: @customer %></p>
-  <p>follows<%= link_to @customer.followings.count, customer_followings_path(@customer.id) %></p>
-  <p>followers<%= link_to @customer.followers.count, customer_followers_path(@customer.id) %></p>
-  <p><%=link_to"お気に入り投稿",favorites_customer_path(@customer.id) %></p>
+                <div class="row">
+                  <div class="mx-auto "><%= image_tag @customer.get_profile_image(250,250), class:"rounded-circle"; %></div>
+                </div>
+                  <div class=" text-center ">
+                    <h5>ユーザーネーム：<%= @customer.account_name %></h5>
+                  </div>
+                  <div class=" text-center">
+                    <h5>自己紹介：<%= @customer.introduction %></h5>
+                  </div>
+                  <div class=" text-center">
+                    <h5>居住地：<%= @customer.spot.spot_name_i18n %></h5>
+                  </div>
+                  <div class=" text-center">
+                    <%= render "public/relationships/relationships", customer: @customer %>
+                  </div>
+                  <div class=" text-center">
+                    <h5>follows<%= link_to @customer.followings.count, customer_followings_path(@customer.id) %></h5>
+                  </div>
+                  <div class=" text-center">
+                    <h5>followers<%= link_to @customer.followers.count, customer_followers_path(@customer.id) %></h5>
+                  </div>
+                  <div class=" text-center">
+                    <h5><%=link_to"お気に入り投稿",favorites_customer_path(@customer.id) %></h5>
+                  </div>
+                  <div class=" text-center">
+                  <% if @customer == current_customer %>
+                     <h5><%= link_to "プロフィール編集", edit_customer_path(@customer) %></h5>
+                  <% end %>
+                  </div>
+            </div>
+
+
 
 <% @posts.each do |post| %>
 <div>
