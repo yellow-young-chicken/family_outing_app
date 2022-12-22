@@ -8,7 +8,7 @@
 <% visitor = notification.visitor %>
 <% visited = notification.visited %>
 
-
+<div class=container>
 <div class=col-md-6.mx-auto>
   <div>
     <div class=form-inline>
@@ -48,6 +48,7 @@
 
     <p class =" display-5 text-muted text-right" ><%= time_ago_in_words(notification.created_at).upcase %></p>
     </div>
+  </div>
   </div>
   <hr>
 
