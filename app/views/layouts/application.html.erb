@@ -33,7 +33,6 @@
           <li class="nav-item"><%= link_to 'マイページ', customer_path(current_customer.id), class: 'nav-item nav-link' %></li>
           <li class="nav-item"><%= link_to 'ユーザー一覧', customers_path, class: 'nav-item nav-link' %></li>
           <li class="nav-item"><%= render "public/partial/circle" %></li>
-          <div class="col-12"><%= render 'public/searches/form' %></div>
           <% elsif admin_signed_in? %>
           <div class = "d-flex align-items-center" style="font-size:20px">
             管理者用
@@ -50,9 +49,13 @@
       </div>
     </div>
   </nav>
+  <% if customer_signed_in? %>
+  <ul class="navbar-nav ml-auto">
+     <li class="text-center"><%= render 'public/searches/form' %></li>
+  </ul>
+  <% end %>
+
   </header>
-
-
     <main>
 
     <% flash.each do |message_type, message| %>
