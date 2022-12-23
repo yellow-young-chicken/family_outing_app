@@ -1,0 +1,77 @@
+<div class="container py-5">
+ <div class="row">
+   <div class="col">
+     <h2 class="m-4 text-center font-weight-bold">投稿編集フォーム</h2>
+     <% if @post.errors.any? %>
+  <%= @post.errors.count %>件のエラーが発生しました
+  <ul>
+    <%# binding.irb %>
+    <% @post.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+</div>
+
+<table class="table table-striped text-center"  style="color:white;">
+
+  <%= form_with model: @post, url: admin_post_path, method: :patch, local: true do |f| %>
+
+     <tr>
+     <div class="field">
+      <th><%= f.label "画像" %></th>
+      <td><%= f.file_field :images, accept: "image/*",multiple: true %></td>
+      </div>
+   </tr>
+
+    <tr>
+     <div class="field">
+      <th><%= f.label "タイトル" %></th>
+      <td><%= f.text_field :title %></td>
+      </div>
+   </tr>
+
+       <tr>
+     <div class="field">
+      <th><%= f.label "投稿内容" %></th>
+      <td><%= f.text_area :post_content %></td>
+      </div>
+   </tr>
+
+          <tr>
+     <div class="field">
+      <th><%= f.label "遊んだ場所" %></th>
+      <td> <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), @spot_id_pair[k]]}, include_blank: "選択して下さい"  %>
+</td>
+      </div>
+   </tr>
+
+    <tr>
+    <div class="field">
+    <td><div class="form-group" id="star"><%= f.label :rate %><%= f.hidden_field :rate, id: :review_star, class:'form-control' %></div></td>
+    </div>
+
+   </tr>
+
+
+
+  </table>
+  <%= f.submit "編集内容を保存する", class: "btn btn-primary" %>
+  <% end %>
+   <%= link_to"戻る",admin_post_path(@post.id) %>
+ </div>
+ </div>
+
+
+    <script>
+      let raty_elem = document.querySelector('#star');
+      raty_elem.innerHTML = ""
+      let option = {
+          starOn: "<%= asset_path('star-on.png') %>",
+          starOff: "<%= asset_path('star-off.png') %>",
+          starHalf: "<%= asset_path('star-half.png') %>",
+          scoreName: 'post[rate]',
+          score: "<%= @post.rate %>",
+        };
+      raty(raty_elem,option);
+    </script>

@@ -1,4 +1,5 @@
 class Admin::CustomersController < ApplicationController
+
   before_action :authenticate_admin!
 
 
@@ -30,7 +31,7 @@ class Admin::CustomersController < ApplicationController
 
     end
   end
-  
+
   def destroy
     @customer = Customer.find(params[:id])
     @customer.destroy
