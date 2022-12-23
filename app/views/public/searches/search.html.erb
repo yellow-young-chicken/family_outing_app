@@ -1,43 +1,121 @@
 <% if @model == 'customer' %>
+<div class="index-background-image">
+<div class="container">
+ <div class="row">
+  <div class="col">
+   <h2 class="m-4 text-center font-weight-bold">ユーザー検索結果 "<%= @content %>"</h2>
+   </div>
+      <table class="table text-center" style="color:white;">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ユーザー画像</th>
+        <th scope="col">ユーザーネーム</th>
+        <th scope="col">自己紹介</th>
+        <th scope="col">居住地</th>
+        <th scope="col">フォロー</th>
+        <th scope="col">フォロワー数</th>
+        <th scope="col">フォロワーズ数</th>
+      </tr>
+    </thead>
 
-	<h3>ユーザー検索結果 "<%= @content %>"</h3>
+    <tbody>
+      <% @records .each do |customer| %>
+      <tr>
+        <td>
+          <%= link_to customer_path(customer.id) do %>
+          <%= image_tag customer.get_profile_image(100,100), class:"rounded-circle"; %>
+           <% end %>
+        </td>
+        <td>
+          <%= customer.account_name %>
+        </td>
+        <td>
+          <%= customer.introduction %>
+        </td>
+        <td>
+          <%= customer.spot.spot_name_i18n %>
+        </td>
+        <td>
+          <%= render "public/relationships/relationships", customer: customer %>
+        </td>
+        <td>
+          <%= link_to customer.followings.count, customer_followings_path(customer.id) %>
+        </td>
+        <td>
+          <%= link_to customer.followers.count, customer_followers_path(customer.id) %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  </div>
+    <div class="row justify-content-center mt-3">
+    <div class='mr-5'>
+      <%= link_to"HOMEに戻る",root_path %>
+    </div>
+  </div>
 
-	<% @records .each do |customer| %>
-<div>
-  <%= link_to customer_path(customer.id) do %>
-  <p>ユーザー画像：<%= image_tag customer.get_profile_image(100,100) %></p>
-   <% end %>
-  <p>ユーザーネーム：<%= customer.account_name %></p>
-  <p>自己紹介：<%= customer.introduction %></p>
-  <p>居住地：<%= customer.spot.spot_name_i18n %></p>
-  <p><%= render "public/relationships/relationships", customer: customer %></p>
-  <p>follows<%= link_to customer.followings.count, customer_followings_path(customer.id) %></p>
-  <p>followers<%= link_to customer.followers.count, customer_followers_path(customer.id) %></p>
+  <div class="row justify-content-center mt-3">
+  </div>
+ </div>
 </div>
-<% end %>
 
-<p><%= link_to"HOMEに戻る",root_path %> </p>
 
 
 
 <% elsif @model == 'post' %>
-	<h3>投稿検索結果 "<%= @content %>"</h3>
 
 
-	<% @records.each do |post| %>
-<div>
-  投稿画像:
-  <%= link_to post_path(post.id) do %>
-    <% post.get_images.each do |image| %>
-      <%= image_tag image.variant(resize_to_limit: [200, 200]).processed %>
-    <% end %>
-  <% end %>
+<h2 class="text-center font-weight-bold">投稿検索結果 "<%= @content %>"</h2>
 
-  <p>タイトル:<%= post.title %></p>
-  <!--<p>説明：<%#post.post_content %></p>-->
-  <p>遊んだ場所：<%= post.spot.spot_name_i18n %></p>
-  <div id="rate_<%= post.id %>"></div>
-<script>
+<% @records.each do |post| %>
+<div class="text-center">
+<div class="card-list-containar py-5">
+<div class="card w-50 mx-auto mt-4 shadow-lg">
+<div class="container">
+        <div id="carouselExampleControls_<%= post.id %>" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <% post.get_images.each_with_index do |image, index| %>
+          <div class="carousel-item<%= index == 0 ? ' active' : ''%>">
+            <%= image_tag image, style: 'width: 100%; height: 800px; object-fit: cover;' %>
+          </div>
+          <% end %>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls_<%= post.id %>" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls_<%= post.id %>" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+</div>
+<div class="card-body">
+  <div class="row">
+    <div class="col-2">
+      <%= link_to customer_path(post.customer.id) do %>
+      <%= image_tag post.customer.get_profile_image(100,100) , class:"mt-3 rounded-circle"; %>
+      <% end %>
+  <p><%= post.customer.account_name %></p>
+  <p><%= post.customer.spot.spot_name_i18n %></p>
+    </div>
+    <div class="col-10">
+      <p class="card-title"><%= link_to post_path(post) do %><%= post.title %><% end %></p>
+      <p class="card-text"><%= post.spot.spot_name_i18n %></p>
+      <p class="card-text"><% post.tag_list.each do |tag| %>
+   <span class="badge badge-primary mr-1 p-2 ">
+     <%= link_to posts_path(tag_name: tag) ,class:"text-white" do %>
+       <%= tag %>
+     <% end %></span>
+   <% end %></p>
+   <p class="card-text"><div id="rate_<%= post.id %>"></div></p>
+   <p class="card-text"><div class=<%= "favorite-" + post.id.to_s %> >
+            <%= render "public/favorites/btn", post: post %>
+        </div></p>
+   <p class="card-text"><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
+  </div>
+  <script>
 $(function(){
 
     let raty_<%= post.id %> = document.querySelector('#rate_<%= post.id %>');
@@ -53,23 +131,13 @@ $(function(){
 });
 </script>
 
-  <% if post.favorited_by?(current_customer) %>
-
-    <%= link_to post_favorites_path(post), method: :delete do %>
-      ♥<%= post.favorites.count %> いいね
-    <% end %>
-    <% else %>
-    <%= link_to post_favorites_path(post), method: :post do %>
-      ♡<%= post.favorites.count %> いいね
-    <% end %>
-  <% end %>
-   <p><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
-
 </div>
-
+</div>
+</div>
+</div>
+</div>
 <% end %>
-
+<% end %>
 <p><%= link_to"HOMEに戻る",root_path %> </p>
 
 
-<% end %>
