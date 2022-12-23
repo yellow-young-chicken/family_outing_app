@@ -10,35 +10,21 @@
     <% end %>
   </ul>
 <% end %>
-
-
-
-
 <%= form_with model: @post, url: posts_path, local: true do |f| %>
-
   <%= f.label "画像" %>
   <%= f.file_field :images, accept: "image/*",multiple: true %>
-
   <%= f.label "タイトル" %>
   <%= f.text_field :title %>
   <%= f.label "投稿内容" %>
   <%= f.text_area :post_content %>
-
   <%= f.label :tag_list %>（,で区切って記載ください。）
   <%= f.text_field :tag_list, value: @post.tag_list.join(',') %>
-
-
-
-
   <%= f.label "都道府県" %>
 
   <!--@spot_id_pairでspot_nameをidに変換しております。-->
   <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), @spot_id_pair[k]]}, include_blank: "選択して下さい"  %>
-
   <%= f.hidden_field :latitude, :value => nil ,id: 'lat' %>
   <%= f.hidden_field :longitude, :value => nil ,id: "lng" %>
-
-
    <% if @post.id === nil %>
     <div class="form-group" id="star">
       <%= f.label :rate %>
@@ -80,10 +66,6 @@
 </script>
 
   <% end %>
-
-
-
-
   <%= f.submit "投稿" %>
 <% end %>
 
