@@ -7,8 +7,9 @@
         <tbody>
 
     <tr>
-      <th>投稿ユーザー画像</th>
       <%= link_to customer_path(@post.customer.id) do %>
+      <th>投稿ユーザー画像</th>
+
       <td><%= image_tag @post.customer.get_profile_image(100,100) %></td>
       <% end %>
     </tr>
@@ -28,9 +29,14 @@
       <th>説明</th>
       <td><%= simple_format(@post.post_content) %></td>
     </tr>
-    <tr>    <th>遊んだ場所</th>
+    <tr>
+    <th>遊んだ場所</th>
       <td><%= @post.spot.spot_name_i18n %></td>
     </tr>
+      <tr>
+    <th>評価</th>
+      <td><div id="rate_show<%= @post.id %>"></div></td>
+  </tr>
     <tr>
       <th>投稿日</th>
       <td><%= @post.created_at.strftime('%Y/%m/%d') %></td>
@@ -54,29 +60,12 @@
           <span class="sr-only">Next</span>
         </a>
       </div>
+      </td>
      </tr>
-     <% if @post.customer.id == current_customer.id %>
-    <tr>
-      <td><%= link_to "編集する", edit_post_path(@post) %></td>
-    </tr>
-    <tr>
-      <td><%= link_to "投稿を削除する", post_path, class: "btn btn-danger", method: :delete, data: { confirm: '本当に削除しますか?' } %></td>
-    </tr>
-  <% end %>
-    <tr>
-      <th>タグ一覧</th>
-          <td>
-<% @post.tag_list.each do |tag| %>
-   <div class="badge badge-primary mr-1 p-2 ">
-     <%= link_to posts_path(tag_name: tag), class: "text-white" do %>
-       <%= tag %>
-     <% end %></div>
-</td>
-      <% end %>
-    </tr>
- <tr>
-      <td><div id="rate_show<%= @post.id %>"></div></td>
-    </tr>
+
+
+
+
 
 
 
@@ -87,11 +76,25 @@
     <div class="col-md-6 mt-3 mt-md-0">
       <div id='map'></div>
     </div>
+    </div>
+    </div>
+
+
+<div class="container">
+  <div style="text-align:center;">
 
 
 
+   <div>タグ一覧：<% @post.tag_list.each do |tag| %>
+   <div class="badge badge-primary mr-1 p-2 ">
+     <%= link_to posts_path(tag_name: tag), class: "text-white" do %>
+       <%= tag %>
+     <% end %></div>
+   <% end %></div>
 
-        <div class=<%= "favorite-" + @post.id.to_s %> >
+
+
+          <div class=<%= "favorite-" + @post.id.to_s %> >
             <%= render "public/favorites/btn", post: @post %>
         </div>
 
@@ -106,19 +109,19 @@
 
 <%= render "public/comments/form", post: @post, comment: @comment %>
 
+  <% if @post.customer.id == current_customer.id %>
+    <%= link_to "編集する", edit_post_path(@post) %>
+    <%= link_to "投稿を削除する", post_path, class: "btn btn-danger", method: :delete, data: { confirm: '本当に削除しますか?' } %>
+  <% end %>
 
   <p><%= link_to"投稿一覧に戻る",posts_path %> </p>
 
-
-
-
-
-<h2>gmap</h2>
-<!--<div id='map'></div>-->
+</div>
+</div>
 
 <style>
 #map {
-  height: 600px;
+  height: 800px;
   width: 100%;
 }
 </style>
