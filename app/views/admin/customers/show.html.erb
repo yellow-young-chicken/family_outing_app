@@ -1,29 +1,77 @@
-<h1>ユーザー詳細ページ</h1>
+            <div class="profile-container border-bottom py-3">
+                <div class="row text-center">
+                    <div class="col-md-12"><h1>ユーザー詳細ページ</h1></div>
+                </div>
 
-<h2>ユーザーネーム：<%= @customer.account_name %></h2>
-<p>会員ID:<%= @customer.id %></p>
-<%= image_tag @customer.get_profile_image(100,100) %>
- <p><%= link_to "プロフィール編集", edit_admin_customer_path(@customer) %></p>
-  <p>自己紹介：<%= @customer.introduction %></p>
-  <p>居住地：<%= @customer.spot.spot_name_i18n %></p>
-  <p>follows<%= link_to @customer.followings.count, customer_followings_path(@customer.id) %></p>
-  <p>followers<%= link_to @customer.followers.count, customer_followers_path(@customer.id) %></p>
-  <p><%=link_to"お気に入り投稿",favorites_customer_path(@customer.id) %></p>
+                <div class="row">
+                  <div class="mx-auto "><%= image_tag @customer.get_profile_image(250,250), class:"rounded-circle"; %></div>
+                </div>
+                  <div class=" text-center ">
+                    <h5>ユーザーネーム：<%= @customer.account_name %></h5>
+                  </div>
+                  <div class=" text-center">
+                    <h5>自己紹介：<%= @customer.introduction %></h5>
+                  </div>
+                  <div class=" text-center">
+                    <h5>居住地：<%= @customer.spot.spot_name_i18n %></h5>
+                  </div>
+
+                  <div class=" text-center">
+                    <h5>follows<%= @customer.followings.count %></h5>
+                  </div>
+                  <div class=" text-center">
+                    <h5>followers<%= @customer.followers.count %></h5>
+                  </div>
+
+                  <div class=" text-center">
+                     <h5><%= link_to "プロフィール編集", edit_admin_customer_path(@customer) %></h5>
+                  </div>
+            </div>
+
+
 
 <% @posts.each do |post| %>
-<div>
-  投稿画像:
-  <%= link_to post_path(post.id) do %>
-    <% post.get_images.each do |image| %>
-      <%= image_tag image.variant(resize_to_limit: [200, 200]).processed %>
-    <% end %>
-  <% end %>
-  <p>タイトル：<%= post.title %></p>
-  <p>説明：<%= post.post_content %></p>
-  <p>遊んだ場所：<%= post.spot.spot_name_i18n %></p>
-  <p><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
 
-   <div id="rate_show<%= post.id %>"></div>
+<div class="text-center">
+<div class="card-list-containar py-5">
+<div class="card w-50 mx-auto mt-4 shadow-lg">
+<div class="container">
+        <div id="carouselExampleControls_<%= post.id %>" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <% post.get_images.each_with_index do |image, index| %>
+          <div class="carousel-item<%= index == 0 ? ' active' : ''%>">
+            <%= image_tag image, style: 'width: 100%; height: 800px; object-fit: cover;' %>
+          </div>
+          <% end %>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls_<%= post.id %>" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls_<%= post.id %>" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+</div>
+
+
+<div class="card-body">
+  <div class="row">
+    <div class="col-12">
+    <p class="card-title"><%= link_to admin_post_path(post) do %><%= post.title %><% end %></p>
+      <p class="card-text"><%= post.spot.spot_name_i18n %></p>
+      <p class="card-text"><% post.tag_list.each do |tag| %>
+   <span class="badge badge-primary mr-1 p-2 ">
+     <%= link_to admin_posts_path(tag_name: tag) ,class:"text-white" do %>
+       <%= tag %>
+     <% end %></span>
+   <% end %></p>
+   <p class="card-text"><div id="rate_<%= post.id %>"></div></p>
+   <p class="card-text"></p>
+   <p class="card-text"><%= link_to "#{post.comments.count} コメント", admin_post_path(post.id) %></p>
+  </div>
+
 <script>
 $(function(){
 
@@ -41,10 +89,20 @@ $(function(){
 });
 </script>
 
-
+</div>
+</div>
+</div>
+</div>
 </div>
 <% end %>
 
-<p><%= link_to"ユーザー一覧に戻る",customers_path %> </p>
+<p><%= link_to"ユーザー一覧に戻る",admin_customers_path %> </p>
 
-<%= paginate @posts %>
+
+<%= paginate @posts, theme: 'twitter-bootstrap-4'   %>
+
+
+
+
+
+

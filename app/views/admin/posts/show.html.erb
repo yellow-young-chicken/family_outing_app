@@ -7,11 +7,13 @@
         <tbody>
 
     <tr>
-      <%= link_to admin_customer_path(@post.customer.id) do %>
+
       <th>投稿ユーザー画像</th>
 
-      <td><%= image_tag @post.customer.get_profile_image(100,100) %></td>
-      <% end %>
+      <td><%= link_to admin_customer_path(@post.customer.id) do %>
+      <%= image_tag @post.customer.get_profile_image(100,100) %>
+      <% end %></td>
+
     </tr>
     <tr>
       <th>ユーザーネーム</th>
@@ -93,24 +95,17 @@
    <% end %></div>
 
 
-
-          <div class=<%= "favorite-" + @post.id.to_s %> >
-            <%= render "admin/favorites/btn", post: @post %>
-        </div>
-
-
           <div class="comments-counter">
-            <%= render "admin/comments/counter", post: @post %>
+            <%= render "public/comments/counter", post: @post %>
           </div>
 
       <div class="comments-index">
-        <%= render "admin/comments/index", post: @post %>
+        <%= render "public/comments/index", post: @post %>
       </div>
 
-<%= render "admin/comments/form", post: @post, comment: @comment %>
-
-    <%= link_to "編集する", admin_edit_post_path(@post) %>
+    <%= link_to "編集する", edit_admin_post_path(@post) %>
     <%= link_to "投稿を削除する", admin_post_path, class: "btn btn-danger", method: :delete, data: { confirm: '本当に削除しますか?' } %>
+
 
   <p><%= link_to"投稿一覧に戻る",admin_posts_path %> </p>
 
