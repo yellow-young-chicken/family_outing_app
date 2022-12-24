@@ -1,4 +1,4 @@
-class Public::PostsController < ApplicationController
+class Public::PostsController < Public::ApplicationController
   
   
   

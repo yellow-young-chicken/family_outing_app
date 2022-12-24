@@ -1,6 +1,4 @@
-class Admin::PostsController < ApplicationController
-
-  before_action :authenticate_admin!
+class Admin::PostsController < Admin::ApplicationController
 
 
   def show
