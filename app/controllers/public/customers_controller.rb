@@ -1,7 +1,6 @@
-class Public::CustomersController < ApplicationController
+class Public::CustomersController < Public::ApplicationController
 
 
-  before_action :authenticate_customer!
   before_action :is_matching_login_customer, only: [:edit, :update, :destroy]
   before_action :ensure_normal_customer, only: [:destroy,:update]
 

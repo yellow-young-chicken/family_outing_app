@@ -1,7 +1,8 @@
-<h1>画像投稿フォーム</h1>
-
-
-<% if @post.errors.any? %>
+<div class="container py-5">
+ <div class="row">
+   <div class="col">
+     <h2 class="m-4 text-center font-weight-bold">投稿フォーム</h2>
+     <% if @post.errors.any? %>
   <%= @post.errors.count %>件のエラーが発生しました
   <ul>
     <%# binding.irb %>
@@ -10,24 +11,42 @@
     <% end %>
   </ul>
 <% end %>
-<%= form_with model: @post, url: posts_path, local: true do |f| %>
-  <%= f.label "画像" %>
-  <%= f.file_field :images, accept: "image/*",multiple: true %>
-  <%= f.label "タイトル" %>
-  <%= f.text_field :title %>
-  <%= f.label "投稿内容" %>
-  <%= f.text_area :post_content %>
-  <%= f.label :tag_list %>（,で区切って記載ください。）
-  <%= f.text_field :tag_list, value: @post.tag_list.join(',') %>
-  <%= f.label "都道府県" %>
+</div>
+</div>
 
-  <!--@spot_id_pairでspot_nameをidに変換しております。-->
-  <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), @spot_id_pair[k]]}, include_blank: "選択して下さい"  %>
-  <%= f.hidden_field :latitude, :value => nil ,id: 'lat' %>
-  <%= f.hidden_field :longitude, :value => nil ,id: "lng" %>
+<%= form_with model: @post, url: posts_path, local: true do |f| %>
+
+<div class="row mt-5">
+  <div class="form-group col-12">
+    <%= f.label "画像", class: "col-sm-2 control-label" %>
+    <%= f.file_field :images, accept: "image/*",multiple: true %>
+  </div>
+  <div class="form-group col-12">
+      <%= f.label "タイトル" , class: "col-sm-2 control-label"%>
+      <%= f.text_field :title %>
+  </div>
+  <div class="form-group col-12">
+      <%= f.label "投稿内容" , class: "col-sm-2 control-label"%>
+      <%= f.text_area :post_content %>
+  </div>
+
+
+  <div class="form-group col-12">
+      <%= f.label "遊んだ場所", class: "col-sm-2 control-label" %>
+      <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), @spot_id_pair[k]]}, include_blank: "選択して下さい"  %>
+
+  </div>
+
+  <div class="form-group col-12">
+      <%= f.label :tag_list , class: "col-sm-2 control-label"%>（,で区切って記載ください。）
+      <%= f.text_field :tag_list, value: @post.tag_list.join(',') %>
+  </div>
+
+  <div class="form-group col-12">
+
    <% if @post.id === nil %>
     <div class="form-group" id="star">
-      <%= f.label :rate %>
+      <%= f.label :rate , class: "col-sm-2 control-label"%>
       <%= f.hidden_field :rate, id: :review_star, class:'form-control' %>
     </div>
 
@@ -66,11 +85,25 @@
 </script>
 
   <% end %>
-  <%= f.submit "投稿" %>
+  </div>
+
+
+  <%= f.hidden_field :latitude, :value => nil ,id: 'lat' %>
+  <%= f.hidden_field :longitude, :value => nil ,id: "lng" %>
+
+
+
+    <div class="actions col-7 text-center">
+    <%= f.submit "投稿" , class: 'btn btn-sm btn-success control-submit mr-5' %>
+  </div>
+</div>
 <% end %>
 
 
-<h2>gmap（遊んだ場所を登録してください）</h2>
+
+
+<div class="container py-5">
+<h4 class="m-4 text-center font-weight-bold">マップ（場所の登録をしてください）</h4>
 
 <input id="address" type="textbox" value="東京駅" placeholder="ここに入力してください。">
 <input type="button" value="登録" onclick="codeAddress()">
@@ -85,6 +118,7 @@
   width: 100%;
 }
 </style>
+</div>
 
 <script>
 let map
@@ -92,12 +126,12 @@ function initMap(){
   geocoder = new google.maps.Geocoder()
 
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 40.7828, lng:-73.9653},
+    center: {lat: 35.681236, lng:139.767125},
     zoom: 12,
   });
 
   marker = new google.maps.Marker({
-    position:  {lat: 40.7828, lng:-73.9653},
+    position:  {lat: 35.681236, lng:139.767125},
     map: map
   });
 }
@@ -136,3 +170,7 @@ function codeAddress(){
 <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
 
 <p><%= link_to"HOMEに戻る",root_path %> </p>
+
+
+</div>
+

@@ -1,5 +1,4 @@
-class Public::RelationshipsController < ApplicationController
-    before_action :authenticate_customer!
+class Public::RelationshipsController < Public::ApplicationController
 
   def create
     customer = Customer.find(params[:customer_id])

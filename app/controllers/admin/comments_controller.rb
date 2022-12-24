@@ -1,6 +1,5 @@
-class Admin::CommentsController < ApplicationController
+class Admin::CommentsController < Admin::ApplicationController
 
-   before_action :authenticate_admin!
 
   def destroy
     @comment = Comment.find(params[:id])
