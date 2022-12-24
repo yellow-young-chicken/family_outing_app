@@ -1,7 +1,7 @@
 <div class="container py-5">
  <div class="row">
    <div class="col">
-     <h2 class="m-4 text-center font-weight-bold">投稿編集フォーム</h2>
+     <h2 class="m-4 text-center font-weight-bold">画像投稿フォーム</h2>
      <% if @post.errors.any? %>
   <%= @post.errors.count %>件のエラーが発生しました
   <ul>
@@ -52,7 +52,21 @@
 </div>
 
 </tr>
+
+<tr>
+<div class="field">
+<th><%= f.label :tag_list , class: "col-sm-2 control-label"%>（,で区切って記載ください。）</th>
+<td><%= f.text_field :tag_list, value: @post.tag_list.join(',') %></td>
+</div>
+</tr>
+
+
 </table>
+
+
+  <%= f.hidden_field :latitude, :value => nil ,id: 'lat' %>
+  <%= f.hidden_field :longitude, :value => nil ,id: "lng" %>
+
   <%= f.submit "編集内容を保存する", class: "btn btn-primary" %>
 <% end %>
 </div>
@@ -73,3 +87,75 @@
         };
       raty(raty_elem,option);
     </script>
+
+
+<div class="container py-5">
+<h4 class="m-4 text-center font-weight-bold">マップ（場所の登録をしてください）</h4>
+
+<input id="address" type="textbox" value="東京駅" placeholder="ここに入力してください。">
+<input type="button" value="登録" onclick="codeAddress()">
+
+<!--<div id="display"></div>-->
+
+<div id='map'></div>
+
+<style>
+#map {
+  height: 600px;
+  width: 100%;
+}
+</style>
+</div>
+
+<script>
+let map
+function initMap(){
+  geocoder = new google.maps.Geocoder()
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 35.681236, lng:139.767125},
+    zoom: 12,
+  });
+
+  marker = new google.maps.Marker({
+    position:  {lat: 35.681236, lng:139.767125},
+    map: map
+  });
+}
+
+window.initMap = initMap;
+
+// ここから追加
+let geocoder
+// const display = document.getElementById('display')
+
+function codeAddress(){
+  let inputAddress = document.getElementById('address').value;
+
+  geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+    if (status == 'OK') {
+      map.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+
+      // display.textContent = "検索結果：" + results[ 0 ].geometry.location
+      let location = results[0].geometry.location;
+      　if (location !== null){
+            document.getElementById('lat').value = location.lat();
+            document.getElementById('lng').value = location.lng();
+      　}
+    } else {
+      alert('該当する結果がありませんでした：' + status);
+    }
+  });
+}
+// ここまで追加
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
+
+
+
+</div>
