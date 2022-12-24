@@ -1,11 +1,10 @@
-class Admin::CustomersController < ApplicationController
+class Admin::CustomersController < Admin::ApplicationController
 
   before_action :authenticate_admin!
 
 
   def new
   end
-
   def index
     @customers = Customer.page(params[:page]).order(created_at: "DESC")
   end
