@@ -1,20 +1,71 @@
-<% if tags.present? %>
+<% if @model == 'customer' %>
+<div class="index-background-image">
+<div class="container">
+ <div class="row">
+  <div class="col">
+   <h2 class="m-4 text-center font-weight-bold">ユーザー検索結果 "<%= @content %>"</h2>
+   </div>
+      <table class="table text-center" style="color:white;">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ユーザー画像</th>
+        <th scope="col">ユーザーネーム</th>
+        <th scope="col">自己紹介</th>
+        <th scope="col">居住地</th>
+        <th scope="col">フォロー</th>
+        <th scope="col">フォロワー数</th>
+        <th scope="col">フォロワーズ数</th>
+      </tr>
+    </thead>
 
-  <% tags.each do |tag| %>
-  <span class="badge badge-primary mr-1 p-2  ">
-    <%= link_to "#{tag.name}(#{tag.taggings_count})", admin_posts_path(tag_name: tag.name) ,class:"text-white"  %>
-  </span>
-  <% end %>
+    <tbody>
+      <% @records .each do |customer| %>
+      <tr>
+        <td>
+          <%= link_to admin_customer_path(customer.id) do %>
+          <%= image_tag customer.get_profile_image(100,100), class:"rounded-circle"; %>
+           <% end %>
+        </td>
+        <td>
+          <%= customer.account_name %>
+        </td>
+        <td>
+          <%= customer.introduction %>
+        </td>
+        <td>
+          <%= customer.spot.spot_name_i18n %>
+        </td>
+        <td>
+          <%= link_to customer.followings.count %>
+        </td>
+        <td>
+          <%= link_to customer.followers.count %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  </div>
+    <div class="row justify-content-center mt-3">
+    <div class='mr-5'>
+      <%= link_to"HOMEに戻る",admin_root_path %>
+    </div>
+  </div>
 
-<% else %>
- <p> 登録されているタグはありません </p>
- <% end %>
+  <div class="row justify-content-center mt-3">
+  </div>
+ </div>
+</div>
 
-<% if tag.present? %>
-  <p class="text-center">"<%= tag %>"の検索結果</p>
-<% end %>
 
-<% posts.each do |post| %>
+
+
+<% elsif @model == 'post' %>
+
+
+<h2 class="text-center font-weight-bold">投稿検索結果 "<%= @content %>"</h2>
+
+<% @records.each do |post| %>
 <div class="text-center">
 <div class="card-list-containar py-5">
 <div class="card w-50 mx-auto mt-4 shadow-lg">
@@ -56,10 +107,10 @@
      <% end %></span>
    <% end %></p>
    <p class="card-text"><div id="rate_<%= post.id %>"></div></p>
+
    <p class="card-text"><%= link_to "#{post.comments.count} コメント", admin_post_path(post.id) %></p>
   </div>
-
-<script>
+  <script>
 $(function(){
 
     let raty_<%= post.id %> = document.querySelector('#rate_<%= post.id %>');
@@ -81,5 +132,7 @@ $(function(){
 </div>
 </div>
 <% end %>
-
+<% end %>
 <p><%= link_to"HOMEに戻る",admin_root_path %> </p>
+
+

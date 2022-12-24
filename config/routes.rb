@@ -7,9 +7,10 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root to: 'homes#top'
+    get 'search' =>"searches#search"
     resources :customers
     resources :posts do
-      resource :favorites, only: [:destroy]
+      # resource :favorites, only: [:destroy]
       resources :comments, only: [:destroy]
     end
 

@@ -1,44 +1,100 @@
-<%= @customer.account_name %>さんの会員情報編集</h2>
-
-<%= flash[:notice] %>
-
-<% if @customer.errors.any? %>
-  <%= @customer.errors.count %>件のエラーが発生しました
-    <ul>
-      <% @customer.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
+<div class="container py-5">
+ <div class="row">
+   <div class="col">
+     <h2 class="m-4 text-center font-weight-bold"><%= @customer.account_name %>さんの会員情報編集</h2>
+     <% if @customer.errors.any? %>
+      <%= @customer.errors.count %>件のエラーが発生しました
+      <ul>
+        <% @customer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
       </ul>
-<% end %>
+  <% end %>
+  </div>
+
+  <table class="table table-striped text-center"  style="color:white;">
+<%= form_with model: @customer, url: admin_customer_path(@customer), local: true do |f| %>
+
+   <tr>
+     <div class="field">
+      <th><%= f.label "アカウント名" %></th>
+      <td><%= f.text_field :account_name , autofocus: true %></td>
+      <td></td>
+      </div>
+   </tr>
+
+    <tr>
+     <div class="field">
+      <th><%= f.label "プロフィール画像" %></th>
+      <td><%= f.file_field :profile_image, placeholder: "プロフィール画像", accept: "image/*" %></td>
+      <td></td>
+      </div>
+   </tr>
+   <tr>
+     <div class="field">
+      <th><%= f.label "居住地" %></th>
+      <td>
+      <!--@spot_id_pairでspot_nameをidに変換しております。-->
+      <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), @spot_id_pair[k]]}, include_blank: "選択して下さい"  %>
+      </td>
+      <td></td>
+      </div>
+   </tr>
+
+    <tr>
+     <div class="field">
+      <th><%= f.label "自己紹介" %></th>
+      <td><%= f.text_area :introduction %></td>
+      <td></td>
+      </div>
+   </tr>
+
+    <tr>
+     <div class="field">
+      <th><%= f.label "メールアドレス" %></th>
+      <td><%= f.email_field :email, autocomplete: "email" %><td>
+        <td></td>
+      </div>
+   </tr>
+
+    <tr>
+     <div class="field">
+      <th><%= f.label "電話番号" %></th>
+      <td><%= f.text_field :phone_number %><td>
+        <td></td>
+      </div>
+   </tr>
+
+      <tr>
+     <div class="field">
+      <th>名前（姓・名）</th>
+      <td><%= f.text_field :last_name %></td>
+      <td><%= f.text_field :first_name %></td>
+      </div>
+   </tr>
+   <tr>
+     <div class="field">
+      <th>フリガナ</th>
+      <td><%= f.text_field :last_name_kana %></td>
+      <td><%= f.text_field :first_name_kana %></td>
+      </div>
+   </tr>
 
 
-	<%= form_with model: @customer, url: admin_customer_path(@customer), local: true do |f| %>
-
-  <%= f.label "アカウント名" %>
-  <%= f.text_field :account_name %>
-  <%= f.label "プロフィール画像" %>
-  <%= f.file_field :profile_image, placeholder: "プロフィール画像", accept: "image/*" %>
-  <%= f.label "居住地" %>
-  <!--@spot_id_pairでspot_nameをidに変換しております。-->
-  <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), @spot_id_pair[k]]}, include_blank: "選択して下さい"  %>
-  <%= f.label "自己紹介" %>
-  <%= f.text_area :introduction %>
-
-  			名前
-				<%= f.label "(姓)", class: "customer_name" %> <%= f.text_field :first_name %>
-				<%= f.label :last_name, "(名)", class: "customer_name" %> <%= f.text_field :last_name %>
-	      フリガナ
-				<%= f.label "(セイ)" %> <%= f.text_field :first_name_kana %>
-				<%= f.label :last_name_kana, "(メイ)" %> <%= f.text_field :last_name_kana %>
-
-
-				<%= f.label "メールアドレス" %>
-				<%= f.email_field :email, autocomplete: "email" %>
-
-				<%= f.label "電話番号" %>
-				<%= f.text_field :phone_number %>
-
-  <%= f.submit "編集内容を保存する", class: "btn btn-primary" %>
+      <tr>
+    <td>  <%= f.submit "編集内容を保存する", class: "btn btn-primary" %></td>
+    <td></td>
+    <td>   <%= link_to "退会する", admin_customer_path, class: "btn btn-danger", method: :delete, data: { confirm: '本当に削除しますか?' } %></td>
+   </tr>
+  <% end %>
+  </table>
   <%= link_to "ユーザー一覧に戻る",admin_customer_path(@customer.id), class: "btn btn-primary" %>
-  <%= link_to "退会する", admin_customer_path, class: "btn btn-danger", method: :delete, data: { confirm: '本当に削除しますか?' } %>
-	<% end %>
+ </div>
+ </div>
+
+
+
+
+
+
+
