@@ -1,4 +1,7 @@
 class Public::PostsController < ApplicationController
+  
+  
+  
   def new
     @post = Post.new
     #@spot_id_pairでハッシュを使い、spot_nameをidに変換しております。
@@ -20,7 +23,7 @@ class Public::PostsController < ApplicationController
 
   def index
 
-    @tags = Post.tag_counts_on(:tags).order('count DESC') 
+    @tags = Post.tag_counts_on(:tags).order('count DESC')
     if @tag = params[:tag_name]   # タグ検索用
       @posts = Post.tagged_with(@tag).page(params[:page]).order("created_at DESC")
     else

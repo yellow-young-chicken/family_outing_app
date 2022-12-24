@@ -1,5 +1,7 @@
   <% post.comments.each do |comment| %>
+    <%= link_to customer_path(comment.customer.id) do %>
     <p><%= image_tag comment.customer.get_profile_image(100,100) %></p>
+     <% end %>
     <%= comment.customer.account_name %>
     <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
     <% if comment.customer == current_customer %>
