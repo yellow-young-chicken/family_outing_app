@@ -13,7 +13,7 @@
   </div>
 
   <table class="table table-striped text-center"  style="color:white;">
-<%= form_with model: @customer, url: admin_customer_path(@customer), local: true do |f| %>
+<%= form_with model: [:admin, @customer], local: true do |f| %>
 
    <tr>
      <div class="field">

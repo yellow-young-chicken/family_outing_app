@@ -21,7 +21,7 @@ class Admin::CustomersController < Admin::ApplicationController
     @customer = Customer.find(params[:id])
     if @customer.update(customer_params)
       flash.now[:notice] = "編集に成功しました!"
-      redirect_to customer_path(@customer.id)
+      redirect_to admin_customer_path(@customer.id)
     else
       @spot_id_pair = Spot.pluck('spot_name, id').to_h
       render :edit
@@ -32,7 +32,7 @@ class Admin::CustomersController < Admin::ApplicationController
   def destroy
     @customer = Customer.find(params[:id])
     @customer.destroy
-    redirect_to root_path
+    redirect_to admin_root_path
   end
 
 

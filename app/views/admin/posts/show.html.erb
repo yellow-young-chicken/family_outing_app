@@ -96,11 +96,11 @@
 
 
           <div class="comments-counter">
-            <%= render "public/comments/counter", post: @post %>
+            <%= render "admin/comments/counter", post: @post %>
           </div>
 
       <div class="comments-index">
-        <%= render "public/comments/index", post: @post %>
+        <%= render "admin/comments/index", post: @post %>
       </div>
 
     <%= link_to "編集する", edit_admin_post_path(@post) %>

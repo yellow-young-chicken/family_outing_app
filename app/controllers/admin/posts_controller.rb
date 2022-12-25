@@ -26,7 +26,7 @@ class Admin::PostsController < Admin::ApplicationController
     @post = Post.find(params[:id])
     if  @post.update(post_params)
       flash[:notice] = "編集に成功しました！"
-      redirect_to post_path(@post.id)
+      redirect_to admin_post_path(@post.id)
     else
       @spot_id_pair = Spot.pluck('spot_name, id').to_h
       render :edit
@@ -37,7 +37,7 @@ class Admin::PostsController < Admin::ApplicationController
     @post = Post.find(params[:id])
     @post.destroy
     flash[:notice] = "削除が完了しました"
-    redirect_to posts_path
+    redirect_to admin_posts_path
   end
 
   private

@@ -12,3 +12,7 @@ Admin.create!(
   password: 'adminadmin',
   )
 
+
+for n in 0..47 do
+  Spot.create(spot_name: n)
+end
