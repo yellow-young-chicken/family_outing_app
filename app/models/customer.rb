@@ -62,6 +62,7 @@ class Customer < ApplicationRecord
       customer.password = SecureRandom.urlsafe_base64
       customer.account_name = "ゲスト"
       customer.spot_id = 1
+      customer.introduction = "ゲストです"
     end
   end
 
