@@ -68,8 +68,6 @@ gem 'rails-i18n'
 gem "gmaps4rails"
 gem "geocoder"
 
-gem 'data-confirm-modal'
-
 gem 'dotenv-rails'
 
 gem 'acts-as-taggable-on', '~> 9.0'
