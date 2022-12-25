@@ -55,8 +55,8 @@ ja:
       post:
         title: タイトル
         post_content: 本文
-        latitude: ニックネーム
-        longitude: ニックネーム
+        latitude: マップ
+        longitude: マップ
         spot_id: 場所
         images: ニックネーム
         spot: 場所

@@ -115,8 +115,8 @@ ActiveRecord::Schema.define(version: 2022_12_19_132220) do
     t.integer "customer_id", null: false
     t.string "title", default: "", null: false
     t.text "post_content", null: false
-    t.string "latitude", default: ""
-    t.string "longitude", default: ""
+    t.string "latitude", default: "", null: false
+    t.string "longitude", default: "", null: false
     t.string "address", default: ""
     t.float "rate", default: 0.0, null: false
     t.datetime "created_at", precision: 6, null: false

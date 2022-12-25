@@ -10,6 +10,8 @@ class Post < ApplicationRecord
   has_many :notifications, dependent: :destroy
 
 
+  validates :latitude, presence:true
+  validates :longitude, presence:true
   validates :title, presence:true
   validates :post_content, presence:true
   # validates :spot_id, presence:true
@@ -21,6 +23,7 @@ class Post < ApplicationRecord
 
   # 写真の投稿制限のためのメゾットを呼び出しております。
   validate :image_type, :image_size, :image_length
+
 
 
 acts_as_taggable_on :tags

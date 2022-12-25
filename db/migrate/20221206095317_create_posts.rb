@@ -7,8 +7,8 @@ class CreatePosts < ActiveRecord::Migration[6.1]
       t.integer :customer_id, null: false
       t.string :title, null: false, default: ""
       t.text :post_content, null: false
-      t.string :latitude, default: ""
-      t.string :longitude, default: ""
+      t.string :latitude, default: "", null: false
+      t.string :longitude, default: "", null: false
       t.string :address, default: ""
       t.float :rate, null: false, default: 0
 

@@ -64,8 +64,8 @@
 </table>
 
 
-  <%= f.hidden_field :latitude, :value => nil ,id: 'lat' %>
-  <%= f.hidden_field :longitude, :value => nil ,id: "lng" %>
+  <%= f.hidden_field :latitude, :value => @post.latitude ,id: 'lat' %>
+  <%= f.hidden_field :longitude, :value => @post.longitude ,id: "lng" %>
 
   <%= f.submit "編集内容を保存する", class: "btn btn-primary" %>
 <% end %>
