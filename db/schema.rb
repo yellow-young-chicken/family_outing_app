@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 2022_12_19_132220) do
   create_table "comments", force: :cascade do |t|
     t.integer "customer_id", null: false
     t.integer "post_id", null: false
-    t.text "comment", default: "", null: false
+    t.text "comment", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2022_12_19_132220) do
     t.string "first_name", default: "", null: false
     t.string "last_name_kana", default: "", null: false
     t.string "first_name_kana", default: "", null: false
-    t.text "introduction", default: "", null: false
+    t.text "introduction"
     t.string "account_name", default: "", null: false
     t.string "phone_number", default: "", null: false
     t.boolean "is_deleted", default: false, null: false
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 2022_12_19_132220) do
     t.integer "spot_id", null: false
     t.integer "customer_id", null: false
     t.string "title", default: "", null: false
-    t.text "post_content", default: "", null: false
+    t.text "post_content", null: false
     t.string "latitude", default: ""
     t.string "longitude", default: ""
     t.string "address", default: ""
@@ -145,16 +145,9 @@ ActiveRecord::Schema.define(version: 2022_12_19_132220) do
     t.string "context", limit: 128
     t.datetime "created_at"
     t.string "tenant", limit: 128
-    t.index ["context"], name: "index_taggings_on_context"
-    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
     t.index ["taggable_id", "taggable_type", "context"], name: "taggings_taggable_context_idx"
-    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
-    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
     t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable_type_and_taggable_id"
-    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
-    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
-    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
     t.index ["tagger_type", "tagger_id"], name: "index_taggings_on_tagger_type_and_tagger_id"
     t.index ["tenant"], name: "index_taggings_on_tenant"
   end
@@ -164,7 +157,6 @@ ActiveRecord::Schema.define(version: 2022_12_19_132220) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "taggings_count", default: 0
-    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
