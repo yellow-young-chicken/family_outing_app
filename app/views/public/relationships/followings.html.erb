@@ -1,4 +1,5 @@
-<h2>Follow Users</h2>
+<div class= "index-background-image">
+  <h2 class="m-4 text-center font-weight-bold">Follow Users</h2>
 <% if @customers.exists? %>
            <table class="table">
            <thead>
@@ -22,7 +23,7 @@
                   <%= render "public/relationships/relationships", customer: customer %>
                 </td>
                 <td>
-                  <%= link_to 'Show', customer_path(customer.id) %>
+                  <%= link_to 'Show', customer_path(customer.id) ,class:"btn btn-primary" %>
                 </td>
 
 
@@ -38,3 +39,5 @@
 <% else %>
   <p>ユーザーはいません</p>
 <% end %>
+
+</div>

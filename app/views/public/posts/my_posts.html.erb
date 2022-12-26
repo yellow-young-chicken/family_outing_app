@@ -1,8 +1,11 @@
-<h1>自分の投稿</h1>
+<div class= "index-background-image">
+<h2 class="m-4 text-center font-weight-bold">自分の投稿</h2>
 
-<%= link_to '投稿新規順', posts_path %>
-<%= link_to 'いいね順', favorites_ranking_path %>
-<%= link_to 'フォローした人の投稿', follow_posts_path %>
-
+<div class="text-center" >
+<span class="badge badge-primary mr-1 p-2  "><%= link_to '投稿新規順', posts_path,class:"text-white"  %></span>
+<span class="badge badge-primary mr-1 p-2  "><%= link_to 'いいね順', favorites_ranking_path ,class:"text-white" %></span>
+<span class="badge badge-primary mr-1 p-2  "><%= link_to 'フォローした人の投稿', follow_posts_path ,class:"text-white" %></span>
+</div>
 <%= render "index", posts: @posts, tags: @tags, tag: nil %>
 
+</div>
