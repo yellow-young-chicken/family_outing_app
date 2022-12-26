@@ -14,97 +14,97 @@
 </div>
 
 <div class="container" >
-<%= form_with model: @post, url: admin_post_path, method: :patch, local: true do |f| %>
+  <%= form_with model: @post, url: admin_post_path, method: :patch, local: true do |f| %>
 
-<table class="table table-striped text-center"  style="color:white;">
-<tr>
-<div class="field">
-<th><%= f.label "画像" %></th>
-<td><%= f.file_field :images, accept: "image/*",multiple: true %></td>
+    <table class="table table-striped text-center"  style="color:white;">
+      <tr>
+        <div class="field">
+          <th><%= f.label "画像" %></th>
+          <td><%= f.file_field :images, accept: "image/*",multiple: true %></td>
+        </div>
+      </tr>
+
+      <tr>
+        <div class="field">
+          <th><%= f.label "タイトル" %></th>
+          <td><%= f.text_field :title %></td>
+        </div>
+      </tr>
+
+      <tr>
+        <div class="field">
+          <th><%= f.label "投稿内容" %></th>
+          <td><%= f.text_area :post_content %></td>
+        </div>
+      </tr>
+
+      <tr>
+        <div class="field">
+          <th><%= f.label "遊んだ場所" %></th>
+          <td> <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), @spot_id_pair[k]]}, include_blank: "選択して下さい"  %>
+          </td>
+        </div>
+      </tr>
+
+      <tr>
+        <div class="field">
+          <td><div class="form-group" id="star"><%= f.label :rate %><%= f.hidden_field :rate, id: :review_star, class:'form-control' %></div></td>
+        </div>
+
+      </tr>
+
+      <tr>
+        <div class="field">
+          <th><%= f.label :tag_list , class: "col-sm-2 control-label"%>（,で区切って記載ください。）</th>
+          <td><%= f.text_field :tag_list, value: @post.tag_list.join(',') %></td>
+        </div>
+      </tr>
+
+
+    </table>
+
+
+    <%= f.hidden_field :latitude, :value => @post.latitude ,id: 'lat' %>
+    <%= f.hidden_field :longitude, :value => @post.longitude ,id: "lng" %>
+
+    <%= f.submit "編集内容を保存する", class: "btn btn-primary" %>
+  <% end %>
 </div>
-</tr>
-
-<tr>
-<div class="field">
-<th><%= f.label "タイトル" %></th>
-<td><%= f.text_field :title %></td>
+<%= link_to"戻る",admin_post_path(@post.id) %>
 </div>
-</tr>
-
-<tr>
-<div class="field">
-<th><%= f.label "投稿内容" %></th>
-<td><%= f.text_area :post_content %></td>
-</div>
-</tr>
-
-<tr>
-<div class="field">
-<th><%= f.label "遊んだ場所" %></th>
-<td> <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), @spot_id_pair[k]]}, include_blank: "選択して下さい"  %>
-</td>
-</div>
-</tr>
-
-<tr>
-<div class="field">
-<td><div class="form-group" id="star"><%= f.label :rate %><%= f.hidden_field :rate, id: :review_star, class:'form-control' %></div></td>
 </div>
 
-</tr>
 
-<tr>
-<div class="field">
-<th><%= f.label :tag_list , class: "col-sm-2 control-label"%>（,で区切って記載ください。）</th>
-<td><%= f.text_field :tag_list, value: @post.tag_list.join(',') %></td>
-</div>
-</tr>
-
-
-</table>
-
-
-  <%= f.hidden_field :latitude, :value => @post.latitude ,id: 'lat' %>
-  <%= f.hidden_field :longitude, :value => @post.longitude ,id: "lng" %>
-
-  <%= f.submit "編集内容を保存する", class: "btn btn-primary" %>
-<% end %>
-</div>
-  <%= link_to"戻る",admin_post_path(@post.id) %>
- </div>
- </div>
-
-
-    <script>
-      let raty_elem = document.querySelector('#star');
-      raty_elem.innerHTML = ""
-      let option = {
-          starOn: "<%= asset_path('star-on.png') %>",
-          starOff: "<%= asset_path('star-off.png') %>",
-          starHalf: "<%= asset_path('star-half.png') %>",
-          scoreName: 'post[rate]',
-          score: "<%= @post.rate %>",
-        };
-      raty(raty_elem,option);
-    </script>
+<script>
+  let raty_elem = document.querySelector('#star');
+  raty_elem.innerHTML = ""
+  let option = {
+      starOn: "<%= asset_path('star-on.png') %>",
+      starOff: "<%= asset_path('star-off.png') %>",
+      starHalf: "<%= asset_path('star-half.png') %>",
+      scoreName: 'post[rate]',
+      score: "<%= @post.rate %>",
+    };
+  raty(raty_elem,option);
+</script>
 
 
 <div class="container py-5">
-<h4 class="m-4 text-center font-weight-bold">マップ（場所の登録をしてください）</h4>
+  <h4 class="m-4 text-center font-weight-bold">マップ（場所の登録をしてください）</h4>
 
-<input id="address" type="textbox" value="東京駅" placeholder="ここに入力してください。">
-<input type="button" value="登録" onclick="codeAddress()">
+  <input id="address" type="textbox" value="東京駅" placeholder="ここに入力してください。">
+  <input type="button" value="登録" onclick="codeAddress()">
 
 <!--<div id="display"></div>-->
 
-<div id='map'></div>
+  <div id='map'></div>
 
-<style>
-#map {
-  height: 600px;
-  width: 100%;
-}
-</style>
+  <style>
+  #map {
+    height: 600px;
+    width: 100%;
+  }
+  </style>
 </div>
 
 <script>

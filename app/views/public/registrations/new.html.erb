@@ -1,73 +1,73 @@
 
 
 <div class="login-background-image">
-<div class="container py-5">
- <div class="row">
-   <h3 class="col m-2 text-left font-weight-bold">新規会員登録</h3>
- </div>
-
-<%= form_with model: @customer, url: customer_registration_path, local: true do |f| %>
-  <%= render "public/shared/error_messages", resource: resource %>
-<div class="row mt-5">
-  <div class="form-group col-12">
-      <%= f.label :"名前", class: "col-sm-2 control-label" %>
-      <%= f.label :"(姓)", class: "mr-3" %>
-    <%= f.text_field :last_name, autofocus: true, :placeholder => "令和" %>
-      <%= f.label :"(名)", class: "ml-2 mr-3" %>
-    <%= f.text_field :first_name, :placeholder => "太郎" %>
-  </div>
-
-  <div class="form-group col-12">
-    <%= f.label :"フリガナ", class: "col-sm-2 control-label" %>
-    <%= f.label :"(セイ)" %>
-    <%= f.text_field :last_name_kana, :placeholder => "レイワ"  %>
-    <%= f.label :"(メイ)",class: "ml-2" %>
-    <%= f.text_field :first_name_kana, :placeholder => "タロウ" %>
-  </div>
-
-  <div class="form-group col-12">
-    <%= f.label :"アカウント名", class: "col-sm-2 control-label mr-5"  %>
-    <%= f.text_field :account_name, :placeholder => "アカウント名" %>
-  </div>
-
+  <div class="container py-5">
+   <div class="row">
+     <h3 class="col m-2 text-left font-weight-bold">新規会員登録</h3>
+   </div>
+  
+  <%= form_with model: @customer, url: customer_registration_path, local: true do |f| %>
+    <%= render "public/shared/error_messages", resource: resource %>
+  <div class="row mt-5">
     <div class="form-group col-12">
-    <%= f.label "居住地", class: "col-sm-2 control-label mr-5"  %>
-    <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), Spot.pluck('spot_name, id').to_h[k]]}, include_blank: "選択して下さい"  %>
+        <%= f.label :"名前", class: "col-sm-2 control-label" %>
+        <%= f.label :"(姓)", class: "mr-3" %>
+      <%= f.text_field :last_name, autofocus: true, :placeholder => "令和" %>
+        <%= f.label :"(名)", class: "ml-2 mr-3" %>
+      <%= f.text_field :first_name, :placeholder => "太郎" %>
     </div>
-
-
-  <div class="form-group col-12">
-    <%= f.label :メールアドレス , class: "col-sm-2 control-label mr-5" %>
-    <%= f.email_field :email, :placeholder => "sample@example.com", autocomplete: "email" %>
+  
+    <div class="form-group col-12">
+      <%= f.label :"フリガナ", class: "col-sm-2 control-label" %>
+      <%= f.label :"(セイ)" %>
+      <%= f.text_field :last_name_kana, :placeholder => "レイワ"  %>
+      <%= f.label :"(メイ)",class: "ml-2" %>
+      <%= f.text_field :first_name_kana, :placeholder => "タロウ" %>
+    </div>
+  
+    <div class="form-group col-12">
+      <%= f.label :"アカウント名", class: "col-sm-2 control-label mr-5"  %>
+      <%= f.text_field :account_name, :placeholder => "アカウント名" %>
+    </div>
+  
+      <div class="form-group col-12">
+      <%= f.label "居住地", class: "col-sm-2 control-label mr-5"  %>
+      <%= f.select :spot_id, Spot.spot_names.keys.map {|k| [I18n.t("enums.spot.spot_name.#{k}"), Spot.pluck('spot_name, id').to_h[k]]}, include_blank: "選択して下さい"  %>
+      </div>
+  
+  
+    <div class="form-group col-12">
+      <%= f.label :メールアドレス , class: "col-sm-2 control-label mr-5" %>
+      <%= f.email_field :email, :placeholder => "sample@example.com", autocomplete: "email" %>
+    </div>
+  
+    <div class="form-group col-12 text-nowrap">
+      <%= f.label :"電話番号(ハイフンなし)",class: "col-sm-2 control-label mr-5"  %>
+      <%= f.text_field :phone_number, :placeholder => "0000000000" ,class: "col-sm-2 control-label mr-5" %>
+    </div>
+  
+    <div class="form-group col-12 text-nowrap">
+      <%= f.label :"パスワード６文字以上",class: "col-sm-2 control-label mr-5" %>
+      <% if @minimum_password_length %>
+      <% end %>
+      <%= f.password_field :password, autocomplete: "new-password" %>
+    </div>
+  
+    <div class="form-group col-12">
+      <%= f.label :"パスワード(確認用)" ,class: "col-sm-2 control-label mr-5" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+  
+  
+    <div class="actions col-7 text-center">
+      <%= f.submit "新規会員登録" , class: 'btn btn-sm btn-success control-submit mr-5' %>
+    </div>
   </div>
-
-  <div class="form-group col-12 text-nowrap">
-    <%= f.label :"電話番号(ハイフンなし)",class: "col-sm-2 control-label mr-5"  %>
-    <%= f.text_field :phone_number, :placeholder => "0000000000" ,class: "col-sm-2 control-label mr-5" %>
-  </div>
-
-  <div class="form-group col-12 text-nowrap">
-    <%= f.label :"パスワード６文字以上",class: "col-sm-2 control-label mr-5" %>
-    <% if @minimum_password_length %>
-    <% end %>
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="form-group col-12">
-    <%= f.label :"パスワード(確認用)" ,class: "col-sm-2 control-label mr-5" %>
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-
-  <div class="actions col-7 text-center">
-    <%= f.submit "新規会員登録" , class: 'btn btn-sm btn-success control-submit mr-5' %>
+  <% end %>
+  
+    <h5 class="col text-left font-weight-bold">既に登録済みの方</h5>
+    <div class="col offset-1 font-weight-bold">
+      <%= link_to "こちら", new_customer_session_path %> からログインしてください。
+    </div>
   </div>
 </div>
-<% end %>
-
-   <h5 class="col text-left font-weight-bold">既に登録済みの方</h5>
-   <div class="col offset-1 font-weight-bold">
-    <%= link_to "こちら", new_customer_session_path %> からログインしてください。
-  </div>
-   </div>
- </div>

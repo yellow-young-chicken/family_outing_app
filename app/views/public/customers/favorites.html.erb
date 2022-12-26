@@ -4,9 +4,9 @@
 <% @favorite_posts.each do |post|%>
 
 <div class="text-center">
-<div class="card-list-containar py-5">
-<div class="card w-50 mx-auto mt-4 shadow-lg">
-<div class="container">
+  <div class="card-list-containar py-5">
+    <div class="card w-50 mx-auto mt-4 shadow-lg">
+      <div class="container">
         <div id="carouselExampleControls_<%= post.id %>" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <% post.get_images.each_with_index do |image, index| %>
@@ -24,51 +24,51 @@
           <span class="sr-only">Next</span>
         </a>
       </div>
-</div>
-<div class="card-body">
-  <div class="row">
-    <div class="col-2">
-      <%= link_to customer_path(post.customer.id) do %>
-      <%= image_tag post.customer.get_profile_image(100,100) , class:"mt-3 rounded-circle"; %>
-      <% end %>
-  <p><%= post.customer.account_name %></p>
-  <p><%= post.customer.spot.spot_name_i18n %></p>
     </div>
-    <div class="col-10">
-      <p class="card-title"><%= link_to post_path(post) do %><%= post.title %><% end %></p>
-      <p class="card-text"><%= post.spot.spot_name_i18n %></p>
-      <p class="card-text"><% post.tag_list.each do |tag| %>
-   <span class="badge badge-primary mr-1 p-2 ">
-     <%= link_to posts_path(tag_name: tag) ,class:"text-white" do %>
-       <%= tag %>
-     <% end %></span>
-   <% end %></p>
-   <p class="card-text"><div id="rate_<%= post.id %>"></div></p>
-   <p class="card-text"><div class=<%= "favorite-" + post.id.to_s %> >
-            <%= render "public/favorites/btn", post: post %>
-        </div></p>
-   <p class="card-text"><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-2">
+            <%= link_to customer_path(post.customer.id) do %>
+              <%= image_tag post.customer.get_profile_image(100,100) , class:"mt-3 rounded-circle"; %>
+            <% end %>
+            <p><%= post.customer.account_name %></p>
+            <p><%= post.customer.spot.spot_name_i18n %></p>
+          </div>
+          <div class="col-10">
+            <p class="card-title"><%= link_to post_path(post) do %><%= post.title %><% end %></p>
+            <p class="card-text"><%= post.spot.spot_name_i18n %></p>
+            <p class="card-text"><% post.tag_list.each do |tag| %>
+              <span class="badge badge-primary mr-1 p-2 ">
+                <%= link_to posts_path(tag_name: tag) ,class:"text-white" do %>
+                  <%= tag %>
+                <% end %></span>
+            <% end %></p>
+            <p class="card-text"><div id="rate_<%= post.id %>"></div></p>
+            <p class="card-text"><div class=<%= "favorite-" + post.id.to_s %> >
+                  <%= render "public/favorites/btn", post: post %>
+              </div></p>
+            <p class="card-text"><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
+          </div>
+        <script>
+        $(function(){
+
+          let raty_<%= post.id %> = document.querySelector('#rate_<%= post.id %>');
+          rate_<%= post.id %>.innerHTML = ""
+          let option_<%= post.id %> = {
+              starOn: "<%= asset_path('star-on.png') %>",
+              starOff: "<%= asset_path('star-off.png') %>",
+              starHalf: "<%= asset_path('star-half.png') %>",
+              score: "<%= post.rate %>",
+              readOnly: true,
+            };
+          raty(raty_<%= post.id %> ,option_<%= post.id %>);
+      });
+        </script>
+
+        </div>
+      </div>
+    </div>
   </div>
-  <script>
-$(function(){
-
-    let raty_<%= post.id %> = document.querySelector('#rate_<%= post.id %>');
-    rate_<%= post.id %>.innerHTML = ""
-    let option_<%= post.id %> = {
-        starOn: "<%= asset_path('star-on.png') %>",
-        starOff: "<%= asset_path('star-off.png') %>",
-        starHalf: "<%= asset_path('star-half.png') %>",
-        score: "<%= post.rate %>",
-        readOnly: true,
-      };
-    raty(raty_<%= post.id %> ,option_<%= post.id %>);
-});
-</script>
-
-</div>
-</div>
-</div>
-</div>
 </div>
 <% end %>
 <div class= "text-center mb-3" ><span class="badge badge-primary mr-1 p-2  "><%= link_to"ユーザー詳細に戻る",customer_path(@customer.id),class:"text-white"%> </span></div>

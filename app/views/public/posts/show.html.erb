@@ -1,182 +1,177 @@
 <div class= "index-background-image">
-<div class="container">
-  <h2 class="m-4 text-center font-weight-bold">投稿詳細</h2>
+  <div class="container">
+    <h2 class="m-4 text-center font-weight-bold">投稿詳細</h2>
 
-  <div class="row">
-    <div class="col-md-6 ">
-      <table class="table "style="color:white; text-align: center;">
-        <tbody>
+    <div class="row">
+      <div class="col-md-6 ">
+        <table class="table "style="color:white; text-align: center;">
+          <tbody>
 
-    <tr>
+            <tr>
+        
+              <th>投稿ユーザー画像</th>
+        
+              <td><%= link_to customer_path(@post.customer.id) do %>
+              <%= image_tag @post.customer.get_profile_image(100,100) %>
+              <% end %></td>
+        
+            </tr>
+            <tr>
+              <th>ユーザーネーム</th>
+              <td><%= @post.customer.account_name %></td>
+            </tr>
+            <tr>
+              <th>ユーザー居住地</th>
+              <td><%= @post.customer.spot.spot_name_i18n %></td>
+            </tr>
+            <tr>
+              <th>タイトル</th>
+              <td><%= @post.title %></td>
+            </tr>
+            <tr>
+              <th>説明</th>
+              <td><%= simple_format(@post.post_content) %></td>
+            </tr>
+            <tr>
+            <th>遊んだ場所</th>
+              <td><%= @post.spot.spot_name_i18n %></td>
+            </tr>
+            <tr>
+            <th>評価</th>
+              <td><div id="rate_show<%= @post.id %>"></div></td>
+            </tr>
+            <tr>
+              <th>投稿日</th>
+              <td><%= @post.created_at.strftime('%Y/%m/%d') %></td>
+            </tr>
+            <tr>
+              <td>
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                    <% @post.get_images.each_with_index do |image, index| %>
+                      <div class="carousel-item<%= index == 0 ? ' active' : ''%>">
+                        <%= image_tag image, style: 'width: 100%; height: 300px; object-fit: cover;' %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+              </td>
+             </tr>
 
-      <th>投稿ユーザー画像</th>
-
-      <td><%= link_to customer_path(@post.customer.id) do %>
-      <%= image_tag @post.customer.get_profile_image(100,100) %>
-      <% end %></td>
-
-    </tr>
-    <tr>
-      <th>ユーザーネーム</th>
-      <td><%= @post.customer.account_name %></td>
-    </tr>
-    <tr>
-      <th>ユーザー居住地</th>
-      <td><%= @post.customer.spot.spot_name_i18n %></td>
-    </tr>
-    <tr>
-      <th>タイトル</th>
-      <td><%= @post.title %></td>
-    </tr>
-    <tr>
-      <th>説明</th>
-      <td><%= simple_format(@post.post_content) %></td>
-    </tr>
-    <tr>
-    <th>遊んだ場所</th>
-      <td><%= @post.spot.spot_name_i18n %></td>
-    </tr>
-      <tr>
-    <th>評価</th>
-      <td><div id="rate_show<%= @post.id %>"></div></td>
-  </tr>
-    <tr>
-      <th>投稿日</th>
-      <td><%= @post.created_at.strftime('%Y/%m/%d') %></td>
-    </tr>
-     <tr>
-       <td>
-             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <% @post.get_images.each_with_index do |image, index| %>
-          <div class="carousel-item<%= index == 0 ? ' active' : ''%>">
-            <%= image_tag image, style: 'width: 100%; height: 300px; object-fit: cover;' %>
-          </div>
-          <% end %>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
+        
+          </tbody>
+        </table>
       </div>
-      </td>
-     </tr>
-
-
-
-
-
-
-
-
-    </tbody>
-  </table>
+      <div class="col-md-6 mt-3 mt-md-0">
+        <div id='map'></div>
+      </div>
+    </div>
   </div>
-    <div class="col-md-6 mt-3 mt-md-0">
-      <div id='map'></div>
-    </div>
-    </div>
-    </div>
 
 
-<div class="container">
-  <div style="text-align:center;">
+  <div class="container">
+    <div style="text-align:center;">
 
 
 
-   <div>タグ一覧：<% @post.tag_list.each do |tag| %>
-   <div class="badge badge-primary mr-1 p-2 ">
-     <%= link_to posts_path(tag_name: tag), class: "text-white" do %>
-       <%= tag %>
-     <% end %></div>
-   <% end %></div>
-
-
-
-          <div class=<%= "favorite-" + @post.id.to_s %> >
-            <%= render "public/favorites/btn", post: @post %>
-        </div>
-
-
-          <div class="comments-counter">
-            <%= render "public/comments/counter", post: @post %>
-          </div>
-
-      <div class="comments-index">
-        <%= render "public/comments/index", post: @post %>
+    <div>タグ一覧：<% @post.tag_list.each do |tag| %>
+      <div class="badge badge-primary mr-1 p-2 ">
+        <%= link_to posts_path(tag_name: tag), class: "text-white" do %>
+          <%= tag %>
+        <% end %>
       </div>
+    <% end %></div>
 
-<%= render "public/comments/form", post: @post, comment: @comment %>
 
-  <% if @post.customer.id == current_customer.id %>
-    <%= link_to "編集する", edit_post_path(@post) , class: 'btn btn btn-success control-submit ' %>
-    <%= link_to "投稿を削除する", post_path, class: "btn btn-danger", method: :delete, data: { confirm: '本当に削除しますか?' } %>
-  <% end %>
 
-  <p><%= link_to"投稿一覧に戻る",posts_path , class: "btn btn-primary"%> </p>
+    <div class=<%= "favorite-" + @post.id.to_s %> >
+      <%= render "public/favorites/btn", post: @post %>
+    </div>
 
-</div>
-</div>
 
-<style>
-#map {
-  height: 800px;
-  width: 100%;
-}
-</style>
+    <div class="comments-counter">
+      <%= render "public/comments/counter", post: @post %>
+    </div>
 
-<script>
-let map
+    <div class="comments-index">
+      <%= render "public/comments/index", post: @post %>
+    </div>
 
-function initMap(){
-  geocoder = new google.maps.Geocoder()
+    <%= render "public/comments/form", post: @post, comment: @comment %>
 
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: <%= @post.latitude.to_f %>, lng: <%= @post.longitude.to_f %>},
-    zoom: 12,
-  });
+    <% if @post.customer.id == current_customer.id %>
+      <%= link_to "編集する", edit_post_path(@post) , class: 'btn btn btn-success control-submit ' %>
+      <%= link_to "投稿を削除する", post_path, class: "btn btn-danger", method: :delete, data: { confirm: '本当に削除しますか?' } %>
+    <% end %>
 
-  const contentString =
-    '説明：<%= simple_format(@post.post_content) %>' +
-    '選んだ場所：<%= @post.spot.spot_name_i18n %><br>' +
-    '<a target="_blank" rel="noopener noreferrer" href="https://www.google.co.jp/maps/?q=<%= @post.latitude.to_f %>,<%= @post.longitude.to_f %>">GoogleMapで詳しく見る</a>'
+    <p><%= link_to"投稿一覧に戻る",posts_path , class: "btn btn-primary"%> </p>
 
-  const infowindow = new google.maps.InfoWindow({
-    content: contentString,
-  });
-
-  const marker = new google.maps.Marker({
-    position: {lat: <%= @post.latitude.to_f %>, lng: <%= @post.longitude.to_f %>},
-    map: map,
-    title: "<%= @post.title %>",
-  });
-
-  marker.addListener("click", () => {
-    infowindow.open({
-      anchor: marker,
-      map,
+    </div>
+  </div>
+  
+  <style>
+  #map {
+    height: 800px;
+    width: 100%;
+  }
+  </style>
+  
+  <script>
+  let map
+  
+  function initMap(){
+    geocoder = new google.maps.Geocoder()
+  
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: <%= @post.latitude.to_f %>, lng: <%= @post.longitude.to_f %>},
+      zoom: 12,
     });
+  
+    const contentString =
+      '説明：<%= simple_format(@post.post_content) %>' +
+      '選んだ場所：<%= @post.spot.spot_name_i18n %><br>' +
+      '<a target="_blank" rel="noopener noreferrer" href="https://www.google.co.jp/maps/?q=<%= @post.latitude.to_f %>,<%= @post.longitude.to_f %>">GoogleMapで詳しく見る</a>'
+  
+    const infowindow = new google.maps.InfoWindow({
+      content: contentString,
+    });
+  
+    const marker = new google.maps.Marker({
+      position: {lat: <%= @post.latitude.to_f %>, lng: <%= @post.longitude.to_f %>},
+      map: map,
+      title: "<%= @post.title %>",
+    });
+  
+    marker.addListener("click", () => {
+      infowindow.open({
+        anchor: marker,
+        map,
+      });
+    });
+  }
+  
+  $(function(){
+      let raty_show<%= @post.id %> = document.querySelector('#rate_show<%= @post.id %>');
+      rate_show<%= @post.id %>.innerHTML = ""
+      let option_show<%= @post.id %> = {
+          starOn: "<%= asset_path('star-on.png') %>",
+          starOff: "<%= asset_path('star-off.png') %>",
+          starHalf: "<%= asset_path('star-half.png') %>",
+          score: "<%= @post.rate %>",
+          readOnly: true,
+        };
+      raty(raty_show<%= @post.id %> ,option_show<%= @post.id %>);
   });
-}
-
-$(function(){
-    let raty_show<%= @post.id %> = document.querySelector('#rate_show<%= @post.id %>');
-    rate_show<%= @post.id %>.innerHTML = ""
-    let option_show<%= @post.id %> = {
-        starOn: "<%= asset_path('star-on.png') %>",
-        starOff: "<%= asset_path('star-off.png') %>",
-        starHalf: "<%= asset_path('star-half.png') %>",
-        score: "<%= @post.rate %>",
-        readOnly: true,
-      };
-    raty(raty_show<%= @post.id %> ,option_show<%= @post.id %>);
-});
-</script>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
+  </script>
+  
+  <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
 
 </div>

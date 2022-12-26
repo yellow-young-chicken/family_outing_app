@@ -1,15 +1,15 @@
 <div class= "index-background-image">
-<h2 class="m-4 text-center font-weight-bold">投稿新規順</h2>
+  <h2 class="m-4 text-center font-weight-bold">投稿新規順</h2>
 
 
-<div class="text-center" >
-<span class="badge badge-primary mr-1 p-2  "><%= link_to 'いいね順', favorites_ranking_path  ,class:"text-white" %></span>
-<span class="badge badge-primary mr-1 p-2  "><%= link_to 'フォローした人の投稿', follow_posts_path  ,class:"text-white" %></span>
-<span class="badge badge-primary mr-1 p-2  "><%= link_to '自分の投稿', my_posts_path  ,class:"text-white" %></span>
-</div>
-<%= render "index", posts: @posts , tags: @tags , tag: @tag %>
+  <div class="text-center" >
+    <span class="badge badge-primary mr-1 p-2  "><%= link_to 'いいね順', favorites_ranking_path  ,class:"text-white" %></span>
+    <span class="badge badge-primary mr-1 p-2  "><%= link_to 'フォローした人の投稿', follow_posts_path  ,class:"text-white" %></span>
+    <span class="badge badge-primary mr-1 p-2  "><%= link_to '自分の投稿', my_posts_path  ,class:"text-white" %></span>
+  </div>
+  <%= render "index", posts: @posts , tags: @tags , tag: @tag %>
 
-<%= paginate @posts, theme: 'twitter-bootstrap-4'  %>
+  <%= paginate @posts, theme: 'twitter-bootstrap-4'  %>
 
 </div>
 
