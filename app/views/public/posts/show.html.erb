@@ -8,13 +8,13 @@
           <tbody>
 
             <tr>
-        
+
               <th>投稿ユーザー画像</th>
-        
+
               <td><%= link_to customer_path(@post.customer.id) do %>
               <%= image_tag @post.customer.get_profile_image(100,100) %>
               <% end %></td>
-        
+
             </tr>
             <tr>
               <th>ユーザーネーム</th>
@@ -66,7 +66,7 @@
               </td>
              </tr>
 
-        
+
           </tbody>
         </table>
       </div>
@@ -116,40 +116,40 @@
 
     </div>
   </div>
-  
+
   <style>
   #map {
     height: 800px;
     width: 100%;
   }
   </style>
-  
+
   <script>
   let map
-  
+
   function initMap(){
     geocoder = new google.maps.Geocoder()
-  
+
     map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: <%= @post.latitude.to_f %>, lng: <%= @post.longitude.to_f %>},
       zoom: 12,
     });
-  
+
     const contentString =
-      '説明：<%= simple_format(@post.post_content) %>' +
-      '選んだ場所：<%= @post.spot.spot_name_i18n %><br>' +
+      'タイトル：<%= simple_format(@post.title) %>' +
+      '選んだ場所：<%= simple_format(@post.spot.spot_name_i18n) %><br>' +
       '<a target="_blank" rel="noopener noreferrer" href="https://www.google.co.jp/maps/?q=<%= @post.latitude.to_f %>,<%= @post.longitude.to_f %>">GoogleMapで詳しく見る</a>'
-  
+
     const infowindow = new google.maps.InfoWindow({
       content: contentString,
     });
-  
+
     const marker = new google.maps.Marker({
       position: {lat: <%= @post.latitude.to_f %>, lng: <%= @post.longitude.to_f %>},
       map: map,
       title: "<%= @post.title %>",
     });
-  
+
     marker.addListener("click", () => {
       infowindow.open({
         anchor: marker,
@@ -157,7 +157,7 @@
       });
     });
   }
-  
+
   $(function(){
       let raty_show<%= @post.id %> = document.querySelector('#rate_show<%= @post.id %>');
       rate_show<%= @post.id %>.innerHTML = ""
@@ -171,7 +171,7 @@
       raty(raty_show<%= @post.id %> ,option_show<%= @post.id %>);
   });
   </script>
-  
+
   <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap" async defer></script>
 
 </div>

@@ -11,7 +11,7 @@
       <h5>ユーザーネーム：<%= @customer.account_name %></h5>
     </div>
     <div class=" text-center">
-      <h5>自己紹介：<%= @customer.introduction %></h5>
+      <h5>自己紹介：<%= simple_format(@customer.introduction) %></h5>
     </div>
     <div class=" text-center">
       <h5>居住地：<%= @customer.spot.spot_name_i18n %></h5>
