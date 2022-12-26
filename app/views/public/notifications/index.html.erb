@@ -4,7 +4,9 @@
   <% if notifications.exists? %>
     <%= render notifications %>
     <%= paginate notifications %>
+    <div class= "text-center " ><span class="badge badge-primary mr-1 p-2  "><%= link_to"HOME",root_path ,class:"text-white"%> </span></div>
   <% else %>
-    <p> 通知はありません </p>
+    <h2 class= "text-center pt-4 pb-3" > 通知はありません </h2>
+    <div class= "text-center " ><span class="badge badge-primary mr-1 p-2  "><%= link_to"HOME",root_path ,class:"text-white"%> </span></div>
   <% end %>
 </div>
