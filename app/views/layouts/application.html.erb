@@ -27,24 +27,24 @@
           <div class = "d-flex align-items-center" style="font-size:15px">
             ようこそ、<%= current_customer.account_name %>さん !!
           </div>
-          <li class="nav-item"><%= link_to 'ログアウト', destroy_customer_session_path, class: 'nav-item nav-link', method: :delete %></li>
-          <li class="nav-item"><%= link_to '投稿', new_post_path, class: 'nav-item nav-link' %></li>
-          <li class="nav-item"><%= link_to '投稿一覧', posts_path, class: 'nav-item nav-link' %></li>
-          <li class="nav-item"><%= link_to 'マイページ', customer_path(current_customer.id), class: 'nav-item nav-link' %></li>
-          <li class="nav-item"><%= link_to 'ユーザー一覧', customers_path, class: 'nav-item nav-link' %></li>
+          <li class="nav-item"><%= link_to  destroy_customer_session_path, class: 'nav-item nav-link', method: :delete do %><i class="fas fa-sign-out-alt"></i>:ログアウト<% end %></li>
+          <li class="nav-item"><%= link_to  new_post_path, class: 'nav-item nav-link' do %><i class="fas fa-plus"></i>:投稿<% end %></li>
+          <li class="nav-item"><%= link_to  posts_path, class: 'nav-item nav-link' do %><i class="far fa-newspaper"></i>:投稿一覧<% end %></li>
+          <li class="nav-item"><%= link_to customer_path(current_customer.id), class: 'nav-item nav-link' do %><i class="fas fa-user"></i>:マイページ<% end %></li>
+          <li class="nav-item"><%= link_to  customers_path, class: 'nav-item nav-link' do %><i class="fas fa-users"></i>:ユーザー一覧<% end %></li>
           <li class="nav-item"><%= render "public/partial/circle" %></li>
           <% elsif admin_signed_in? %>
           <div class = "d-flex align-items-center" style="font-size:25px">
             管理者用
           </div>
-          <li class="nav-item"><%= link_to destroy_admin_session_path, class: 'nav-item nav-link', method: :delete do %>ログアウト<% end %></li>
-          <li class="nav-item"><%= link_to admin_customers_path, class: 'nav-item nav-link' do %>ユーザー一覧<% end %></li>
-          <li class="nav-item"><%= link_to admin_posts_path, class: 'nav-item nav-link' do %>投稿一覧<% end %></li>
+          <li class="nav-item"><%= link_to destroy_admin_session_path, class: 'nav-item nav-link', method: :delete do %><i class="fas fa-sign-out-alt"></i>:ログアウト<% end %></li>
+          <li class="nav-item"><%= link_to admin_customers_path, class: 'nav-item nav-link' do %><i class="fas fa-users"></i>:ユーザー一覧<% end %></li>
+          <li class="nav-item"><%= link_to admin_posts_path, class: 'nav-item nav-link' do %><i class="far fa-newspaper"></i>:投稿一覧<% end %></li>
           <% else %>
-          <li class="nav-item"><%= link_to about_path, class: 'nav-item nav-link' do %>About<%end%></li>
-          <li class="nav-item"><%=link_to new_customer_session_path, class: 'nav-item nav-link' do %>ログイン<% end %></li>
-          <li class="nav-item"><%=link_to  new_customer_registration_path, class: 'nav-item nav-link' do %>新規登録<% end %></li>
-          <li class="nav-item"><%= link_to customers_guest_sign_in_path, class: 'nav-item nav-link', method: :post do %>ゲストログイン（閲覧用）<% end %></li>
+          <li class="nav-item"><%= link_to about_path, class: 'nav-item nav-link' do %><i class="fas fa-globe-asia"></i>:About<%end%></li>
+          <li class="nav-item"><%=link_to new_customer_session_path, class: 'nav-item nav-link' do %><i class="fas fa-sign-in-alt"></i>:ログイン<% end %></li>
+          <li class="nav-item"><%=link_to  new_customer_registration_path, class: 'nav-item nav-link' do %><i class="far fa-handshake"></i>:新規登録<% end %></li>
+          <li class="nav-item"><%= link_to customers_guest_sign_in_path, class: 'nav-item nav-link', method: :post do %><i class="fas fa-sign-in-alt"></i>:ゲストログイン<% end %></li>
           <% end %>
         </ul>
       </div>
