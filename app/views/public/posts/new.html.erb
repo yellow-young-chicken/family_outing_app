@@ -139,14 +139,17 @@
   // ここから追加
   let geocoder
   // const display = document.getElementById('display')
-
+  var marker = null;
   function codeAddress(){
     let inputAddress = document.getElementById('address').value;
 
     geocoder.geocode( { 'address': inputAddress}, function(results, status) {
       if (status == 'OK') {
+        if (marker != null){
+          marker.setMap(null);
+        }
         map.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
+        marker = new google.maps.Marker({
             map: map,
             position: results[0].geometry.location
         });

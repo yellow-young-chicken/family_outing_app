@@ -7,7 +7,7 @@
       <h6 class="col m-2 text-left font-weight-bold">会員の方はこちらからログイン</h6>
     </div>
 
-  <%= form_with model: @customer, url: customer_session_path do |f| %>
+  <%= form_with model: @customer, url: customer_session_path, local:true do |f| %>
     <div class="form-group row ml-5">
       <%= f.label :"メールアドレス", class: "col-sm-3 control-label"  %>
       <%= f.email_field :email, autofocus: true, autocomplete: "email",:placeholder => "sample@example.com", class: "col-sm-4 form-control-static"%>
