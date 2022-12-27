@@ -20,8 +20,14 @@
   color: #6c6b6b;
 }
 
-// Google Fontsを入れております。
+// 英字のGoogle Fontsを入れております。
 @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+
+* {
+    font-family: "Noto Sans JP", sans-serif;
+}
 
 .login-background-image{
   background-image: image-url("AdobeStock_283493013.jpeg");
@@ -34,6 +40,8 @@
   background-size: cover;
   color: white;
 }
+
+// topとaboutのボタンを装飾しております。
 
 .i-red {
   path {
@@ -78,6 +86,7 @@
   }
 }
 
+// ページネーションを中央寄せにしております
 .pagination {
   justify-content: center;
 }
