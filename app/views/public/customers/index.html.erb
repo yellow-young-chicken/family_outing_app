@@ -25,7 +25,7 @@
               <%= image_tag customer.get_profile_image(100,100), class:"rounded-circle"; %>
                <% end %>
             </td>
-            <td>
+            <td class="">
               <%= customer.account_name %>
             </td>
             <td>
@@ -34,7 +34,7 @@
             <td>
               <%= customer.spot.spot_name_i18n %>
             </td>
-            <td>
+            <td class=<%= "customer-" + customer.id.to_s %>>
               <%= render "public/relationships/relationships", customer: customer %>
             </td>
             <td>

@@ -12,21 +12,21 @@
 
       <tbody>
         <% @customers.each do |customer| %>
-        <tr>
-          <td>
-            <%= image_tag customer.get_profile_image(100,100) %>
-          </td>
-          <td>
-            <%= customer.account_name %>
-          </td>
-          <td>
-            <%= render "public/relationships/relationships", customer: customer %>
-          </td>
-          <td>
-            <%= link_to 'Show', customer_path(customer.id),class:"btn btn-primary" %>
-          </td>
-
-        </tr>
+          <tr>
+            <td>
+              <%= image_tag customer.get_profile_image(100,100) %>
+            </td>
+            <td>
+              <%= customer.account_name %>
+            </td>
+            <td>
+              <%= render"public/relationships/relationships", customer: customer %>
+            </td>
+            <td>
+              <%= link_to 'Show', customer_path(customer.id),class:"btn btn-primary" %>
+            </td>
+  
+          </tr>
         <% end %>
 
       </tbody>
